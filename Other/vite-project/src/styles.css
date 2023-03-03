@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    background-color: grey;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    text-align: center;
+    margin-top: 25px;
+    background-color: white;
+    max-width: 318px;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+}

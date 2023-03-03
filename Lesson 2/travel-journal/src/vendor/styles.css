@@ -1,0 +1,118 @@
+/* Global */
+
+* {
+    box-sizing: border-box;
+
+}
+
+body,
+html {
+    margin: 0;
+    font-family: 'Inter', 'sans-serif';
+    background-color: #e5e5e5;
+}
+
+.main-container {
+    margin: 20px auto 0 auto;
+    background-color: white;
+    max-width: 550px;
+    height: 704px;
+}
+
+/* End Global */
+
+/* Header  */
+
+.header--container {
+    background-color: #f55a5a;
+    margin-bottom: 45px;
+    max-width: 550px;
+    max-height: 55px;
+}
+
+.header--wrapper {
+    padding: 15px 0 20px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.header--text {
+    font-weight: 500px;
+    font-size: 14.4600px;
+    line-height: 18px;
+    letter-spacing: -0.075em;
+    color: white;
+}
+
+.header--logo {
+    width: 24px;
+    height: 24px;
+}
+
+/* End Header */
+
+/* Card */
+
+.card--wrapper {
+    display: flex;
+    padding: 0px 40px 36px 40px; 
+}
+
+.card--img {
+    max-width: 125px;
+    max-height: 168px;
+    min-height: 168px;
+    border-radius: 5px;
+}
+
+.card--info-header {
+    margin: 20px 0px 0px 19px;
+}
+
+.card--gps-marker {
+    margin-right: 4px;
+    max-width: 7px;
+    max-height: 9.55px;
+}
+
+.card--location {
+    margin-right: 12px;
+    font-weight: 400px;
+    font-size: 10.24px;
+    line-height: 12px;
+    letter-spacing: 0.17em;
+}
+
+.card--gps {
+    font-weight: 400px;
+    font-size: 10.24px;
+    color: #918e9b;
+    text-decoration: underline;
+}
+
+.card--title, .card--date, .card--text {
+    margin: 0;
+    padding: 0;
+}
+
+.card--title {
+    margin: 4px 0 15px 0;
+    font-size: 25px;
+    line-height: 30px;
+}
+
+.card--date {
+    font-size: 10.24px;
+    line-height: 12px;
+}
+
+.card--text {
+    margin: 9px 0 0 0;
+    font-weight: 400;
+    font-size: 10.24px;
+    line-height: 150%
+}
+
+/* Card End */

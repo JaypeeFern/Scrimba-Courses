@@ -1,0 +1,133 @@
+/* Global */
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: #23252c;
+    margin-top: 44px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+/* End Global */
+
+/* Info */
+
+.--info-container {
+    background: #1A1B21;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    max-width: 317px;
+    min-height: 399px;
+
+}
+
+.--info-name {
+    color: white;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    margin-bottom: -10px;
+}
+
+.--info-occupation {
+    color: #F3BF99;
+    text-align: center;
+    font-weight: 400;
+    font-size: 12.8px;
+    line-height: 15px;
+    font-family: 'Inter';
+    margin-bottom: -3px;
+}
+
+.--info-website {
+    color: #F5F5F5;
+    text-align: center;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 10.24px;
+    line-height: 150%;
+}
+
+.--info-avatar {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    max-width: 317px;
+    max-height: 317px;
+}
+
+.--info-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.--info-button-container > .--info-email {
+    border-radius: 6px;
+    border : 1px solid #D1D5DB;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    background: #FFFFFF;
+    padding: 9px 13px 9px 11px;
+    width: 115px;
+    height: 34px;
+} 
+
+.--info-button-container > .--info-linkedin {
+    border-radius: 6px;
+    border : 1px solid #5093E2;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    background: #5093E2;
+    color: white;
+    padding: 9px 13px 9px 11px;
+    width: 115px;
+    height: 34px;
+} 
+
+/* End Info */
+
+/* About and Interest */
+
+.--about-container, .--interest-container {
+    color: white;
+    font-family: 'Inter';
+    margin: 25px 36px 25px 34px;
+}
+
+.--about-header, .--interest-header {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.--about-text, .--interest-text {
+    font-weight: 400;
+    font-size: 10.24px;
+    line-height: 15.36px;
+}
+
+/* About and Interest End */
+
+/* Footer */
+
+.--footer-container {
+    background: #161619;
+    padding: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.--footer {
+    display: flex;
+    justify-content: center;
+    gap: 23px;
+}
+
+/* Footer End */
