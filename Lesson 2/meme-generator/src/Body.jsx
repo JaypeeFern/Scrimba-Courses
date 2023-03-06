@@ -52,20 +52,38 @@ export default function Body() {
         })
     }
 
+    function topText() {
+        setMeme(prevMeme => {
+            return {
+                ...prevMeme,
+                topText: document.getElementById('top-text').value
+            }
+        })
+    }
+
+    function bottomText() {
+        setMeme(prevMeme => {
+            return {
+                ...prevMeme,
+                bottomText: document.getElementById('bottom-text').value
+            }
+        })
+    }
+
     return (
         <div className="body-container">
             <form className="body--meme-generator">
                 <div className="body--form-group">
-                    <input className="body--text-input" type="text" placeholder=' Top' />
-                    <input className="body--text-input" type="text" placeholder=' Bottom' />
+                    <input onKeyUp={topText} id='top-text' className="body--text-input" type="text" placeholder=' Top' />
+                    <input onKeyUp={bottomText} id='bottom-text' className="body--text-input" type="text" placeholder=' Bottom' />
                 </div>
                 <div className="body--button">
                     <input onClick={getMemeImage} type="button" value='Get a new meme Image  🖼' />
                 </div>
                 <div className="meme-container">
                     <img className="body--meme" src={meme.randomImage}/>
-                    <p className="body-top--text">SHUT UP</p>
-                    <p className="body-bottom--text">AND TAKE MY MONEY</p>
+                    <p className="body-top--text">{meme.topText}</p>
+                    <p className="body-bottom--text">{meme.bottomText}</p>
                 </div>
             </form>
         </div>
