@@ -29,7 +29,7 @@ function App() {
 
   // Create handleChange() function to update state 
   function handleChange(event) {
-    const {name, value, checked, type} = event.target // Destructure event.target 
+    const { name, value, checked, type } = event.target // Destructure event.target 
     // Check if input type is checkbox and update state accordingly
     setFormData(prevFormData => {
       return {
@@ -46,8 +46,8 @@ function App() {
 
     if (formData.password != formData.confirmPassword) {
       console.log('Password do not match!')
-    } 
-    
+    }
+
     if (formData.newsLetter == true) {
       console.log('Thank you for signing up to our newsletter!')
     }
