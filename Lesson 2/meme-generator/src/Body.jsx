@@ -3,54 +3,6 @@ import memesData from './data/memeData';
 
 export default function Body() {
 
-    // function topText() {
-    //     const topText = document.getElementById('top-text').value;
-    //     const topTextElement = document.querySelector('.body-top--text');
-    //     topTextElement.innerHTML = topText;
-    // }
-
-    // function bottomText() {
-    //     const bottomText = document.getElementById('bottom-text').value;
-    //     const bottomTextElement = document.querySelector('.body-bottom--text');
-    //     bottomTextElement.innerHTML = bottomText;
-    // }
-
-    // const [memeImage, setMemeImage] = React.useState("")
-    // function randomMeme() {
-    //     const memesArray = memeData.data.memes
-    //     const randomNumber = Math.floor(Math.random() * memesArray.length)
-    //     setMemeImage(memesArray[randomNumber].url)
-    // }
-
-    // const [topText, setTopText] = React.useState("")
-    // const [bottomText, setBottomText] = React.useState("")
-    // const [randomImage, setRandomImage] = React.useState("http://i.imgflip.com/1bij.jpg")
-    // const [allMemeImages, setAllMemeImages] = React.useState(memeData)
-
-    // function getMemeImage() {
-    //     const memesArray = memeData.data.memes
-    //     const randomNumber = Math.floor(Math.random() * memesArray.length)
-    //     setRandomImage(memesArray[randomNumber].url)
-    // }
-
-    // function topText() {
-    //     setMeme(prevMeme => {
-    //         return {
-    //             ...prevMeme,
-    //             topText: document.getElementById('top-text').value
-    //         }
-    //     })
-    // }
-
-    // function bottomText() {
-    //     setMeme(prevMeme => {
-    //         return {
-    //             ...prevMeme,
-    //             bottomText: document.getElementById('bottom-text').value
-    //         }
-    //     })
-    // }
-
     // Create a state for the meme object
     const [meme, setMeme] = React.useState(({
         topText: "",
@@ -58,14 +10,19 @@ export default function Body() {
         randomImage: "http://i.imgflip.com/1bij.jpg",
     }))
 
-    console.log(meme)
-
     // Create a state for the meme data
-    const [allMemeImages, setAllMemeImages] = React.useState(memesData)
+    const [allMemes, setAllMemes] = React.useState([])
+
+    React.useEffect(() => {
+        console.log('Component did mount')
+        fetch('https://api.imgflip.com/get_memes')
+        .then(response => response.json())
+        .then(memeData => setAllMemes(memeData))
+    }, [meme.randomImage])
 
     // Create a function to get a random meme image
     function getMemeImage() {
-        const memesArray = allMemeImages.data.memes // Get the memes array from the meme data
+        const memesArray = allMemes.data.memes // Get the memes array from the meme data
         const randomNumber = Math.floor(Math.random() * memesArray.length) // Get a random number
         setMeme(prevMeme => { // Set the state
             return {
