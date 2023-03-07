@@ -3,17 +3,6 @@ import './App.css'
 
 function App() {
 
-  const [formData, setFormData] = React.useState(
-    {
-      email: '',
-      password: '',
-      confirmPassword: '',
-      newsLetter: false
-    }
-  )
-
-  // console.log(formData)
-
   /**
    * Challenge: Connect the form to local state
    * 
@@ -30,27 +19,37 @@ function App() {
    *    up for our newsletter!" to the console.
    */
 
-  function handleChange(event) {
+  // Create State for form Data
+  const [formData, setFormData] = React.useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    newsLetter: true
+  })
 
-    const {name, value, type, checked} = event.target
+  // Create handleChange() function to update state 
+  function handleChange(event) {
+    const {name, value, checked, type} = event.target // Destructure event.target 
+    // Check if input type is checkbox and update state accordingly
     setFormData(prevFormData => {
       return {
-        ...prevFormData,
-        [name]: type === 'checkbox' ? checked : value
+        ...prevFormData, // Spread previous state
+        [name]: type === 'checkbox' ? checked : value // To check if input type is checkBox or not
       }
     })
   }
 
+  // Creat handleSubmit() function to handle form submission
   function handleSubmit(event) {
-    event.preventDefault()
     console.log(formData)
+    event.preventDefault() // Prevent default behaviour of form submission
 
     if (formData.password != formData.confirmPassword) {
       console.log('Password do not match!')
-    }
-
+    } 
+    
     if (formData.newsLetter == true) {
-      console.log('Thanks for signing up for our newsletter!')
+      console.log('Thank you for signing up to our newsletter!')
     }
 
   }
@@ -58,35 +57,40 @@ function App() {
   return (
     <div className="form-container">
       <form className="form" onSubmit={handleSubmit}>
-        <input name='email' 
-        value={formData.email} 
-        type="email" 
-        placeholder="Email address" 
-        className="form--input" 
-        onChange={handleChange}
+        <input
+          type="email"
+          placeholder="Email address"
+          className="form--input"
+          name="email"
+          onChange={handleChange}
+          value={formData.email}
         />
-
-        <input name='password' 
-        value={formData.password} 
-        type="password" 
-        placeholder="Password" 
-        className="form--input" 
-        onChange={handleChange}
+        <input
+          type="password"
+          placeholder="Password"
+          className="form--input"
+          name="password"
+          onChange={handleChange}
+          value={formData.password}
         />
-
-        <input name='confirmPassword' 
-        value={formData.confirmPassword} 
-        type="password" 
-        placeholder="Confirm password" 
-        className="form--input" 
-        onChange={handleChange}
+        <input
+          type="password"
+          placeholder="Confirm password"
+          className="form--input"
+          name="confirmPassword"
+          onChange={handleChange}
+          value={formData.confirmPassword}
         />
 
         <div className="form--marketing">
-          <input name='newsLetter' onChange={handleChange} id="okayToEmail" type="checkbox" />
+          <input
+            id="okayToEmail"
+            type="checkbox"
+            name="newsLetter"
+            onChange={handleChange}
+          />
           <label htmlFor="okayToEmail">I want to join the newsletter</label>
         </div>
-
         <button className="form--submit">Sign up</button>
       </form>
     </div>
