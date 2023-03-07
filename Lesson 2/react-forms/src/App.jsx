@@ -46,6 +46,8 @@ function App() {
 
     if (formData.password != formData.confirmPassword) {
       console.log('Password do not match!')
+    } else {
+      console.log('Successfully signed up!')
     }
 
     if (formData.newsLetter == true) {
