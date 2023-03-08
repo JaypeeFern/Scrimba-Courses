@@ -24,7 +24,7 @@ export default function App() {
  * of the App component
  */
 
-  // Create a variable called `setStorage` that GETS the notes from localStorage
+  // Create a variable that will GET the note list array from localStorage()
   const setStorage = () => JSON.parse(localStorage.getItem('notes'))
 
   const [notes, setNotes] = React.useState(setStorage || [])
@@ -58,7 +58,7 @@ export default function App() {
     setNotes(oldNotes => { // Get the old array
       const newArray = [] // Create a new array
       for (let i = 0; i < oldNotes.length; i++) { // Loop through the old array
-        const oldNote = oldNotes[i] // Get the old note
+        const oldNote = oldNotes[i] 
         if (oldNote.id === currentNoteId) { // If the note id matches the current note id
           newArray.unshift({ ...oldNote, body: text }) // Add the new note to the beginning of the new array
         } else {
