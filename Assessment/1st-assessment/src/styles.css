@@ -6,6 +6,8 @@
 
 html,
 body {
+    margin: 0;
+    padding: 0;
     font-family: poppins, sans-serif;
     background-color: rgb(32, 51, 84);
 }
@@ -15,7 +17,7 @@ body {
     max-width: 800px;
     background-color: white;
     border-radius: 10px;
-    max-height: 500px;
+    /* max-height: 500px; */
 }
 
 /* End Global */
@@ -37,6 +39,7 @@ body {
     font-weight: bold;
     font-size: 20px;
     letter-spacing: -0.005em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .navbar--textright {
@@ -44,6 +47,7 @@ body {
     font-size: 15px;
     letter-spacing: -0.03em;
     font-weight: 300;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 /* Navbar End */
@@ -51,12 +55,16 @@ body {
 /* Body */
 
 .body--container {
-    display: flex;
+    /* display: flex; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
     background-color: white;
     min-height: 500px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
 
 /* Body End */
 
