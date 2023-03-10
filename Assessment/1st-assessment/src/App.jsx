@@ -1,18 +1,21 @@
 import React from "react";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Recipe from './components/Recipe'
+import { nanoid } from 'nanoid'
 
 function App() {
   return (
     <div className="main-container">
       <Header />
       <main className="body--container">
-          <div className='body--left'>
-          
-          </div>
-          <div className='body--right'>
-          
-          </div>
+        <div className='body--left'>
+          <Recipe
+            foodName='Chicken'
+            foodImage='https://thumbs.dreamstime.com/b/panorama-banner-raw-chicken-portions-cooking-barbecuing-skinless-breasts-diced-strips-goulash-stir-fry-legs-157723250.jpg'
+          />
+        </div>
+        <div className='body--right'>
+        </div>
       </main>
     </div>
   );

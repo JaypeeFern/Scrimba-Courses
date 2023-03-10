@@ -58,7 +58,7 @@ export default function App() {
     setNotes(oldNotes => { // Get the old array
       const newArray = [] // Create a new array
       for (let i = 0; i < oldNotes.length; i++) { // Loop through the old array
-        const oldNote = oldNotes[i] 
+        const oldNote = oldNotes[i] // Get the old note at the current index of the loop
         if (oldNote.id === currentNoteId) { // If the note id matches the current note id
           newArray.unshift({ ...oldNote, body: text }) // Add the new note to the beginning of the new array
         } else {
@@ -124,14 +124,14 @@ export default function App() {
               newNote={createNewNote}
               deleteNote={deleteNote}
             />
-            {
+            {/* {
               currentNoteId &&
               notes.length > 0 &&
               <Editor
                 currentNote={findCurrentNote()}
                 updateNote={updateNote}
               />
-            }
+            } */}
           </Split>
           :
           <div className="no-notes">
