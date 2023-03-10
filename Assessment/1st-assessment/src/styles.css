@@ -103,7 +103,7 @@ body {
     flex-grow: 1;
   }
 
-.foodName {
+.recipeName {
     position: absolute;
     z-index: 1;
     color: white;

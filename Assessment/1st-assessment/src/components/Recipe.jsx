@@ -4,7 +4,7 @@ export default function Recipe(props) {
     return (
         <div className="recipe-container">
             <img className='foodImage' src={props.foodImage}/>
-            <span className="foodName">{props.foodName}</span>
+            <span className="recipeName">{props.recipeName}</span>
         </div>
     )
 }
