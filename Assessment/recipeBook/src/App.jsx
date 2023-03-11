@@ -1,65 +1,80 @@
 import React from "react";
 import Header from "./components/Header";
-import Recipe from './components/Recipe'
-import AddRecipe from "./forms/AddRecipe";
+import Dish from './components/Dish'
+import AddDish from "./forms/AddDish";
 import { nanoid } from 'nanoid'
 
 function App() {
 
   // Get the data from Local Storage
-  const getRecipe = () => JSON.parse(localStorage.getItem('recipe')) || []
+  const getFood = () => JSON.parse(localStorage.getItem('food')) || []
   // Set the data to the state
-  const [recipe, setRecipe] = React.useState(getRecipe)
-  // Create state for Recipe ID
-  const [currentRecipeId, setCurrentRecipeId] = React.useState((recipe[0] && recipe[0].id) || '')
+  const [food, setFood] = React.useState(getFood)
+  // Create state for dish ID
+  const [currentFoodId, setCurrentFoodId] = React.useState((food[0] && food[0].id) || '')
   // Add the data to the Local Storage
-  localStorage.setItem('recipe', JSON.stringify(recipe))
+  localStorage.setItem('food', JSON.stringify(food))
   // Everytime the state changes, the data in the Local Storage will be updated
   React.useEffect(() => {
-    const getRecipe = JSON.parse(localStorage.getItem('recipe'))
-    setRecipe(getRecipe)
-  }, [currentRecipeId])
+    const getFood = JSON.parse(localStorage.getItem('food'))
+    setFood(getFood)
+  }, [currentFoodId])
 
-  // Create a new recipe
-  function createNewRecipe(event) {
+  // Create a new dish
+  function createNewFood(event) {
     event.preventDefault()
-    const newRecipe = { // Create a new recipe object
+    const newFood = { // Create a new dish object
       id: nanoid(),
-      recipeName: event.target.recipeName.value,
+      foodName: event.target.foodName.value,
+      foodDescription: event.target.foodDescription.value,
     }
-    // Add the new recipe to the state array if the recipe name is not empty
-    if (newRecipe.recipeName !== '') {
-      setRecipe(prevRecipe => [...prevRecipe, newRecipe])
+    // Add the new dish to the state array if the recipe name is not empty
+    if (newFood.foodName !== '') {
+      setFood(prevFood => [...prevFood, newFood])
     } else {
-      alert('Please enter a recipe name')
+      alert('Please enter dish name')
     }
-    // Set the new recipe as the current recipe ID
-    setCurrentRecipeId(newRecipe.id)
+    // Set the new dish as the current recipe ID
+    setCurrentFoodId(newFood.id)
   }
 
-  // Map through the recipe array and return a Recipe component for each recipe
-  const recipeElements = recipe.map(recipe => {
+  // Delete a recipe
+  function deleteFood(event, foodId) {
+    event.stopPropagation()
+    // Filter the recipe array and return a new array without the dish that has the same ID as the recipe ID that was passed in
+    setFood(prevFoods => prevFoods.filter(prevFood => prevFood.id !== foodId))
+  }
+
+  // Update a recipe
+  function updateFood(event, foodId) {
+    event.stopPropagation()
+    console.log(foodId)
+  }
+
+  // Map through the recipe array and return a Food component for each Dish
+  const dishElements = food.map(food => {
     return (
-      <Recipe
-        key={recipe.id}
-        currentRecipeId={recipe.id}
-        recipeName={recipe.recipeName}
+      <Dish
+        key={food.id}
+        currentFoodId={food.id}
+        foodName={food.foodName}
+        foodDescription={food.foodDescription}
         foodImage='https://thumbs.dreamstime.com/b/panorama-banner-raw-chicken-portions-cooking-barbecuing-skinless-breasts-diced-strips-goulash-stir-fry-legs-157723250.jpg'
+        deleteFood={deleteFood}
+        updateFood={updateFood}
       />
     )
   })
-
-  // localStorage.clear()
 
   return (
     <div className="main-container">
       <Header />
       <main className="body--container">
         <div className='body--left'>
-          {recipeElements}
+          {dishElements}
         </div>
         <div className='body--right'>
-          <AddRecipe createNewRecipe={createNewRecipe} />
+          <AddDish createNewFood={createNewFood} />
         </div>
       </main>
     </div>

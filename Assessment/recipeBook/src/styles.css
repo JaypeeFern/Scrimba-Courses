@@ -39,7 +39,7 @@ body {
     font-weight: bold;
     font-size: 20px;
     letter-spacing: -0.005em;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .navbar--textright {
@@ -47,7 +47,7 @@ body {
     font-size: 15px;
     letter-spacing: -0.03em;
     font-weight: 300;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .navbar--button {
@@ -82,6 +82,10 @@ body {
     border-bottom-right-radius: 10px;
 }
 
+/* Body End */
+
+/* Body Left */
+
 .body--left {
     /* background-color: red; */
 }
@@ -101,9 +105,9 @@ body {
     max-width: 100%;
     z-index: 1;
     flex-grow: 1;
-  }
+}
 
-.recipeName {
+.foodName {
     position: absolute;
     z-index: 1;
     color: white;
@@ -111,10 +115,50 @@ body {
     font-weight: 500;
     letter-spacing: -0.03em;
     padding-right: 15px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Body End */
+#foodDescription {
+    height: 150px;
+}
+
+.deleteDish {
+    position: absolute;
+    z-index: 1;
+    right: 88%;   
+    opacity: 0.4;
+    transition: opacity 0.3s ease-in-out
+}
+
+.updateDish {
+    position: absolute;
+    z-index: 1;
+    right: 78%;  
+    opacity: 0.4;
+    transition: opacity 0.3s ease-in-out
+}
+
+.deleteDish:hover, .updateDish:hover {
+    opacity: 1;
+}
+
+/* Body Left End */
+
+/* Body Right */
+
+.body--right {
+    padding: 24px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Body Right End */
 
 /* Footer */
 
