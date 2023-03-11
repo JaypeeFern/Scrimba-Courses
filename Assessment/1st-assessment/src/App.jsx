@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./components/Header";
 import Recipe from './components/Recipe'
+import AddRecipe from "./forms/AddRecipe";
 import { nanoid } from 'nanoid'
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
     return (
       <Recipe
         key={recipe.id}
+        currentRecipeId={recipe.id}
         recipeName={recipe.recipeName}
         foodImage='https://thumbs.dreamstime.com/b/panorama-banner-raw-chicken-portions-cooking-barbecuing-skinless-breasts-diced-strips-goulash-stir-fry-legs-157723250.jpg'
       />
@@ -57,13 +59,7 @@ function App() {
           {recipeElements}
         </div>
         <div className='body--right'>
-          <div className="form--container">
-            <form onSubmit={createNewRecipe}>
-              <label htmlFor='recipeName'>Recipe Name</label>
-              <input type='text' name='recipeName' id='recipeName' />
-              <button type='submit'>Add New Recipe</button>
-            </form>
-          </div>
+          <AddRecipe createNewRecipe={createNewRecipe} />
         </div>
       </main>
     </div>

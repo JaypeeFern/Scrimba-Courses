@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 
-export default function Recipe(props) {
-    return (
-        <div className="recipe-container">
-            <img className='foodImage' src={props.foodImage}/>
-            <span className="recipeName">{props.recipeName}</span>
-        </div>
-    )
+export default function Recipe({currentRecipeId, recipeName, foodImage}) {
+  return (
+    <div id={currentRecipeId} className="recipe-container">
+      <img className="foodImage" src={foodImage} />
+      <span className="recipeName">{recipeName}</span>
+    </div>
+  );
 }
