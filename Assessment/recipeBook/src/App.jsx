@@ -161,10 +161,10 @@ function App() {
         <div className='body--right'>
           <Forms
             createNewFood={createNewFood}
-            showAddForm={showAddForm}
-            handleShowAddForm={handleShowAddForm}
+            // showAddForm={showAddForm}
+            // handleShowAddForm={handleShowAddForm}
             showUpdateForm={showUpdateForm}
-            handleShowUpdateForm={handleShowUpdateForm}
+            // handleShowUpdateForm={handleShowUpdateForm}
           />
         </div>
       </main>
