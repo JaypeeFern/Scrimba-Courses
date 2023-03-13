@@ -2,8 +2,6 @@ import React from 'react'
 import Body from './components/Body'
 import Navbar from './components/Navbar'
 import Dish from './components/Dish'
-import AddDish from "./forms/AddDish";
-import UpdateDish from "./forms/UpdateDish";
 import Forms from "./forms/Forms";
 import { nanoid } from 'nanoid'
 import './styles.css'
@@ -72,45 +70,53 @@ function App() {
   }
 
   // Create state for the forms to show or hide
-  const [showAddForm, setShowForm1] = React.useState(false);
+  const [showAddForm, setShowAddForm] = React.useState(false);
   const [showUpdateForm, setShowUpdateForm] = React.useState(false);
 
   // Show the add form
   function handleShowAddForm(event) {
     event.preventDefault()
-    showAddForm(true);
-    setShowUpdateForm(false);
+    if (showAddForm === false && showUpdateForm === true) {
+      setShowAddForm(false)
+      setShowUpdateForm(false)
+    } else {
+      setShowAddForm(prevState => !prevState);
+    }
   }
 
   // Show the update form
   function handleShowUpdateForm(event) {
     event.preventDefault()
-    setShowForm1(false)
+    setShowAddForm(false)
     setShowUpdateForm(true)
   }
 
   // Update a dish
   function updateDish(event, foodId) {
     event.preventDefault()
-    handleShowUpdateForm(event)
+    // handleShowUpdateForm(event)
     // Find the object with the matching ID
     const selectedFood = food.find(food => food.id === foodId);
     if (selectedFood) {
       // Populate the form with the data from the selected object
+      document.getElementById('currentFoodId').value = selectedFood.id;
       document.getElementById('foodName').value = selectedFood.foodName;
       document.getElementById('foodDescription').value = selectedFood.foodDescription;
 
       // Add an event listener to the form submit button
       document.getElementById('updateDish').addEventListener('click', function (event) {
 
+        event.preventDefault();
+
         // Get the new values from the form
         const updatedFood = {
+          foodId: document.getElementById('currentFoodId').value,
           foodName: document.getElementById('foodName').value,
           foodDescription: document.getElementById('foodDescription').value,
         };
 
         // Find the index of the object with the matching ID
-        const index = food.findIndex(food => food.foodId === updatedFood.foodId);
+        const index = food.findIndex(food => food.id === updatedFood.foodId);
 
         if (index >= 0) {
           // Modify the existing object with the new values
@@ -120,11 +126,25 @@ function App() {
           // Update the data in local storage
           localStorage.setItem('food', JSON.stringify(food));
 
-          console.log(food[index]);
+          // Update the state
+          setFood(food);
+          setShowAddForm(true)
+          setShowUpdateForm(false);
+
+          // console.log(food[index]);
         } else {
           console.log(`Food with ID ${updatedFood.foodId} not found.`);
         }
+
       });
+
+      document.getElementById('deleteDish').addEventListener('click', function (event) {
+        event.preventDefault();
+        deleteDish(event, foodId);
+        setShowAddForm(true)
+        setShowUpdateForm(false);
+      });
+
     } else {
       console.log(`Food with ID ${foodId} not found.`);
     }
@@ -155,14 +175,25 @@ function App() {
   return (
     <div className='main-container'>
       <Navbar />
-      <Body 
-      dishElements={dishElements}
-      Forms={Forms}
-      createNewFood={createNewFood}
-      showUpdateForm={showUpdateForm}
+      <Body
+        dishElements={dishElements}
+        Forms={Forms}
+        createNewFood={createNewFood}
+        showUpdateForm={showUpdateForm}
+        showAddForm={showAddForm}
+        deleteDish={deleteDish}
+        handleShowAddForm={handleShowAddForm}
       />
     </div>
   )
 }
 
 export default App
+
+
+  // Show the add form
+  // function handleShowAddForm(event) {
+  //   event.preventDefault()
+  //   showAddForm(true);
+  //   setShowUpdateForm(false);
+  // }
