@@ -4,8 +4,8 @@ export default function Recipe({ currentFoodId, foodName, foodDescription, foodI
   return (
     <div id={currentFoodId} className="dish--container">
       <div className="dish--wrapper">
-        <img className="foodImage" src={foodImage} onClick={(event) => updateDishWithForm(event, currentFoodId, foodName, foodDescription)}/>
-        <span className="foodName">{foodName}</span>
+        <img className="foodImage" src={foodImage}/>
+        <span className="foodName" onClick={(event) => updateDishWithForm(event, currentFoodId, foodName, foodDescription)}>{foodName}</span>
       </div>
     </div>
   );

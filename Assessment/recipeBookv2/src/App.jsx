@@ -94,7 +94,6 @@ function App() {
   // Update a dish
   function updateDish(event, foodId) {
     event.preventDefault()
-    // handleShowUpdateForm(event)
     // Find the object with the matching ID
     const selectedFood = food.find(food => food.id === foodId);
     if (selectedFood) {
@@ -150,6 +149,7 @@ function App() {
     }
   }
 
+  // Update a dish with the form showing after 200ms delay to allow the form to show first
   function updateDishWithForm(event, foodId) {
     handleShowUpdateForm(event);
     setTimeout(() => {
