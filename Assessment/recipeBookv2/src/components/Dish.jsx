@@ -1,14 +1,14 @@
 import React from "react";
 import { Button, Modal } from 'react-bootstrap';
 
-export default function Recipe({ currentFoodId, selectedFoodId, foodName, foodDescription, foodImage, updateDishWithForm, test, show, handleClose, handleShow}) {
+export default function Recipe({ currentFoodId, selectedFoodId, foodName, foodDescription, foodImage, updateDishWithForm, show, handleModalClose, handleModalShow}) {
   return (
     <div id={currentFoodId} className="dish--container">
       <div className="dish--wrapper">
-        <img className="foodImage" src={foodImage} onClick={() => handleShow(currentFoodId)}/>
+        <img className="foodImage" src={foodImage} onClick={() => handleModalShow(currentFoodId)}/>
         <span className="foodName" onClick={(event) => updateDishWithForm(event, currentFoodId, foodName, foodDescription)}>{foodName}</span>
       </div>
-      <Modal backdrop="static" centered show={show && currentFoodId === selectedFoodId} onHide={handleClose}>
+      <Modal backdrop="static" centered show={show && currentFoodId === selectedFoodId} onHide={handleModalClose}>
         <Modal.Header closeButton>
           <Modal.Title className="fs-6">{foodName}</Modal.Title>
         </Modal.Header>
