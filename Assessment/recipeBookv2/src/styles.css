@@ -86,7 +86,7 @@ body {
   display: grid;
   /* grid-template-columns: repeat(5, 1fr); */
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-template-rows: repeat(1, 180px);
+  grid-template-rows: repeat(2, 180px);
   gap: 10px;
   margin: 0 auto;
   position: relative;
@@ -101,7 +101,7 @@ body {
   display: block;
   transition: opacity 0.2s ease-in-out;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.8);
 
 }
 
@@ -114,12 +114,13 @@ body {
   position: absolute;
   z-index: 1;
   color: white;
-  font-size: 32px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.03em;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
   margin-top: 3px;
   cursor: pointer;
+  text-align: center;
 }
 
 #foodDescription {
@@ -139,7 +140,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(22, 22, 22, 0.8);
+  background-color: rgba(22, 22, 22, 1);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }

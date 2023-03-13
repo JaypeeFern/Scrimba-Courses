@@ -23,7 +23,10 @@ function App() {
   }, [currentFoodId])
 
   // Random Food Image
-  const [imageUrl, setImageUrl] = React.useState('');
+  const [imageUrl, setImageUrl] = React.useState({
+    url: '',
+    name: ''
+  });
 
   // API Key for Pexels
   // TmvsB31UhnWsaSc1eweoin54jJkU8D59cu4UEdNuGmFYtQCiqAdoGdqh
@@ -37,20 +40,28 @@ function App() {
         }
       });
       const data = await response.json();
+      console.log(data);
       const randomIndex = Math.floor(Math.random() * data.photos.length);
-      setImageUrl(data.photos[randomIndex].src.large);
+      // setImageUrl(data.photos[randomIndex].src.large);
+      setImageUrl({
+        url: data.photos[randomIndex].src.large,
+        name: data.photos[randomIndex].alt
+      });
+
     };
     fetchImage();
   }, [currentFoodId]);
+
+
 
   // Create a new dish
   function createNewFood(event) {
     event.preventDefault()
     const newFood = { // Create a new dish object
       id: nanoid(),
-      foodName: event.target.foodName.value,
+      foodName: event.target.foodName.value !== '' ? event.target.foodName.value : imageUrl.name,
       foodDescription: event.target.foodDescription.value,
-      foodImage: imageUrl
+      foodImage: imageUrl.url
     }
     // Add the new dish to the state array if the dish name is not empty
     if (newFood.foodName !== '') {
@@ -157,6 +168,19 @@ function App() {
     }, 200)
   }
 
+  // Modal functions
+  const [show, setShow] = React.useState(false);
+  const [selectedFoodId, setselectedFoodId] = React.useState(false)
+
+  function handleClose () {
+    setShow(false)
+  }
+
+  function handleShow (foodId) {
+    setShow(true)
+    setselectedFoodId(foodId)
+  }
+
   // Map through the dish array and return a Food component for each Dish
   const dishElements = food.map(food => {
     return (
@@ -168,6 +192,11 @@ function App() {
         foodImage={food.foodImage}
         deleteDish={deleteDish}
         updateDishWithForm={updateDishWithForm}
+
+        handleClose={handleClose}
+        handleShow={handleShow}
+        show={show}
+        selectedFoodId={selectedFoodId}
       />
     )
   })

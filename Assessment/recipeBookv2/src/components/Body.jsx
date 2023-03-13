@@ -5,7 +5,7 @@ export default function Body({ dishElements, Forms, createNewFood, showUpdateFor
         <main className='body--main-container'>
             <section className='main--landing container-fluid mt-4'>
                 <div className='main--content text-white fs-5 fw-light'>
-                    <span className='fade-up'>Welcome to my Dish Viewing App, a platform that showcases my skills in React! This app is the culmination of everything I've learned so far in React JS, and is designed to be a simple, tool for viewing your dishes.</span>
+                    <span className='fade-up'>Welcome to my Dish Viewing App, a platform that showcases my skills in React! This app is the culmination of everything I've learned so far in React JS, and is designed to be a simple, tool for viewing dishes.</span>
                     <br />
                     <button type='button' onClick={(event) => handleShowAddForm(event)} className='fade-up btn btn-warning mt-3' id='showForm'>{showAddForm | showUpdateForm ? 'Hide Form' : 'Show Form'}</button>
                 </div>
