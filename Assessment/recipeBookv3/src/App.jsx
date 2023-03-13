@@ -10,45 +10,31 @@ import './styles.css'
 
 function App() {
 
-  const messageRef = collection(db, "food")
+  const collectionRef = collection(db, "food")
 
-  // getDocs(messageRef).then((querySnapshot) => {
-  //   // Loop through the documents and log them
-  //   querySnapshot.forEach((doc) => {
-  //     console.log(doc.id, " => ", doc.data());
-  //   });
-  // }).catch((error) => {
-  //   console.log("Error getting documents: ", error);
-  // });
-
-  const [newFood, setNewFood] = React.useState([])
-
-  const fireBaseHandleSubmit = async (e) => {
-    e.preventDefault()
-    if (newFood === "") return;
-
-    await addDoc(messageRef, {
-      id: nanoid(),
-      createdAt: serverTimestamp(),
-      foodName: newFood,
-      foodDescription: newFood
-    })
-    setNewFood("")
-  }
-
-  // Get the data from Local Storage
-  const getFood = () => JSON.parse(localStorage.getItem('food')) || []
   // Set the data to the state
-  const [food, setFood] = React.useState(getFood)
+  const [food, setFood] = React.useState([])
+
   // Create state for dish ID
   const [currentFoodId, setCurrentFoodId] = React.useState((food[0] && food[0].id) || '')
-  // Add the data to the Local Storage
-  localStorage.setItem('food', JSON.stringify(food))
-  // Everytime the state changes, the data in the Local Storage will be updated
+
+  // Get the data from the database collection "food" in Firebase
+  async function getData() {
+    try {
+      const querySnapshot = await getDocs(collectionRef);
+      const documents = [];
+      querySnapshot.forEach((doc) => {
+        documents.push({ id: doc.id, ...doc.data() });
+      });
+      setFood(documents);
+    } catch (error) {
+      console.log("Error getting documents: ", error);
+    }
+  }
+
   React.useEffect(() => {
-    const getFood = JSON.parse(localStorage.getItem('food'))
-    setFood(getFood)
-  }, [currentFoodId])
+    getData();
+  }, [currentFoodId]);
 
   // Random Food Image
   const [imageUrl, setImageUrl] = React.useState({
@@ -98,6 +84,23 @@ function App() {
     // Set the new dish as the current dish ID
     setCurrentFoodId(newFood.id)
   }
+
+  // IMPORTANT!!!!!! THIS FUNCTION HAS NOT BEEN TESTED YET
+  // Add a dish to the database collection "food" in Firebase
+  const fireBaseHandleSubmit = async (e) => {
+    e.preventDefault()
+    if (food === "") return;
+
+    await addDoc(collectionRef, {
+      id: nanoid(),
+      createdAt: serverTimestamp(),
+      foodName: '',
+      foodDescription: '',
+      foodImage: ''
+    })
+    setFood("")
+  }
+  // IMPORTANT!!!!!! THIS FUNCTION HAS NOT BEEN TESTED YET
 
   // Delete a dish
   function deleteDish(event, foodId) {
