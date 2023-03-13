@@ -4,9 +4,37 @@ import Navbar from './components/Navbar'
 import Dish from './components/Dish'
 import Forms from "./forms/Forms";
 import { nanoid } from 'nanoid'
+import { db } from './firebase/firebase'
+import { addDoc, getDocs, collection, serverTimestamp } from 'firebase/firestore'
 import './styles.css'
 
 function App() {
+
+  const messageRef = collection(db, "food")
+
+  // getDocs(messageRef).then((querySnapshot) => {
+  //   // Loop through the documents and log them
+  //   querySnapshot.forEach((doc) => {
+  //     console.log(doc.id, " => ", doc.data());
+  //   });
+  // }).catch((error) => {
+  //   console.log("Error getting documents: ", error);
+  // });
+
+  const [newFood, setNewFood] = React.useState([])
+
+  const fireBaseHandleSubmit = async (e) => {
+    e.preventDefault()
+    if (newFood === "") return;
+
+    await addDoc(messageRef, {
+      id: nanoid(),
+      createdAt: serverTimestamp(),
+      foodName: newFood,
+      foodDescription: newFood
+    })
+    setNewFood("")
+  }
 
   // Get the data from Local Storage
   const getFood = () => JSON.parse(localStorage.getItem('food')) || []
@@ -210,6 +238,7 @@ function App() {
         showAddForm={showAddForm}
         deleteDish={deleteDish}
         handleShowAddForm={handleShowAddForm}
+        fireBaseHandleSubmit={fireBaseHandleSubmit}
       />
     </div>
   )
