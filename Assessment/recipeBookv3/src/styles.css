@@ -1,0 +1,176 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  height: 100%;
+  background-color: #eaeaff;
+}
+
+/* Navbar */
+
+.navbar-style {
+  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.3), 0 0 2px 0 rgba(0, 0, 0, 0.14), 0 0 1px -1px rgba(0, 0, 0, 0.12);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Navbar End  */
+
+/* Body */
+
+.main--landing {
+  background-image: url(https://images.pexels.com/photos/13581821/pexels-photo-13581821.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  font-family: 'Courier New';
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 350px;
+  max-height: 350px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.3), 0 0 2px 0 rgba(0, 0, 0, 0.14), 0 0 1px -1px rgba(0, 0, 0, 0.12);
+
+}
+
+.main--content {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.main--landing::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(33, 33, 33, 0.8);
+  /* the tint color and opacity */
+  z-index: 1;
+  pointer-events: none;
+  /* disable pointer events on the pseudo-element */
+}
+
+.main--content {
+  position: relative;
+  z-index: 2;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeUp 1.2s ease-in-out forwards;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feature--container {
+  display: grid;
+  /* grid-template-columns: repeat(5, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-rows: repeat(2, 180px);
+  gap: 10px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.foodImage {
+  max-width: 100%;
+  max-height: 350px;
+  z-index: 1;
+  flex-grow: 1;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.8);
+
+}
+
+.foodImage:hover {
+  opacity: 0.5;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.foodName {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+  margin-top: 3px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#foodDescription {
+  height: 150px;
+}
+
+.dish--wrapper {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: relative;
+}
+
+.dish--wrapper::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(22, 22, 22, 1);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.dish--wrapper:hover::before {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.forms--container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: 350px;
+  background-color: #fbfbff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Body End */
+
+/* Footer */
+
+/* Footer End */
