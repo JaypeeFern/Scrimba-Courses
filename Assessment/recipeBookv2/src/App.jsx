@@ -40,7 +40,7 @@ function App() {
         }
       });
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       const randomIndex = Math.floor(Math.random() * data.photos.length);
       // setImageUrl(data.photos[randomIndex].src.large);
       setImageUrl({
@@ -83,7 +83,7 @@ function App() {
   const [showUpdateForm, setShowUpdateForm] = React.useState(false);
 
   // Show the add form
-  function handleModalShowAddForm(event) {
+  function handleShowAddForm(event) {
     event.preventDefault()
     if (showAddForm === false && showUpdateForm === true) {
       setShowAddForm(false)
@@ -94,7 +94,7 @@ function App() {
   }
 
   // Show the update form
-  function handleModalShowUpdateForm(event) {
+  function handleShowUpdateForm(event) {
     event.preventDefault()
     setShowAddForm(false)
     setShowUpdateForm(true)
@@ -160,22 +160,22 @@ function App() {
 
   // Update a dish with the form showing after 200ms delay to allow the form to show first
   function updateDishWithForm(event, foodId) {
-    handleModalShowUpdateForm(event);
+    handleShowUpdateForm(event);
     setTimeout(() => {
       updateDish(event, foodId);
     }, 200)
   }
 
   // Modal functions
-  const [show, setShow] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
   const [selectedFoodId, setselectedFoodId] = React.useState(false)
 
-  function handleModalClose () {
-    setShow(false)
+  function handleModalClose() {
+    setShowModal(false)
   }
 
-  function handleModalShow (foodId) {
-    setShow(true)
+  function handleModalShow(foodId) {
+    setShowModal(true)
     setselectedFoodId(foodId)
   }
 
@@ -193,7 +193,7 @@ function App() {
 
         handleModalClose={handleModalClose}
         handleModalShow={handleModalShow}
-        show={show}
+        showModal={showModal}
         selectedFoodId={selectedFoodId}
       />
     )
@@ -209,7 +209,7 @@ function App() {
         showUpdateForm={showUpdateForm}
         showAddForm={showAddForm}
         deleteDish={deleteDish}
-        handleModalShowAddForm={handleModalShowAddForm}
+        handleShowAddForm={handleShowAddForm}
       />
     </div>
   )
@@ -219,7 +219,7 @@ export default App
 
 
   // Show the add form
-  // function handleModalShowAddForm(event) {
+  // function handleShowAddForm(event) {
   //   event.preventDefault()
   //   showAddForm(true);
   //   setShowUpdateForm(false);
