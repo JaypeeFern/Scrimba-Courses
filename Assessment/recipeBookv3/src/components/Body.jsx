@@ -10,7 +10,7 @@ export default function Body({ currentFoodId, dishElements, Forms, showUpdateFor
                 <div className='main--content text-white fs-5 fw-light'>
                     <Typewriter
                         onInit={(typewriter) => {
-                            typewriter.pasteString(bodyText)
+                            typewriter.typeString(bodyText)
                                 .callFunction(() => {
                                     setIsTypingComplete(true);
                                 })
