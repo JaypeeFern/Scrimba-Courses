@@ -7,7 +7,7 @@ export default function Forms({currentFoodId, showAddForm, showUpdateForm, creat
     return (
         <div className="form--container">
             {showAddForm && <AddDish createNewFood={createNewFood} />}
-            {showUpdateForm && <UpdateDish currentFoodId={currentFoodId} handleDeleteDish={handleDeleteDish}/>}
+            {showUpdateForm && <UpdateDish currentFoodId={currentFoodId}/>}
         </div>
     );
 }

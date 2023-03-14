@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Body({ dishElements, currentFoodId, Forms, showUpdateForm, showAddForm, handleShowAddForm, createNewFood, handleDeleteDish}) {
+export default function Body({currentFoodId, dishElements, Forms, showUpdateForm, showAddForm, handleShowAddForm, createNewFood}) {
     return (
         <main className='body--main-container'>
             <section className='main--landing container-fluid mt-4'>
@@ -16,7 +16,6 @@ export default function Body({ dishElements, currentFoodId, Forms, showUpdateFor
                     showUpdateForm={showUpdateForm}
                     showAddForm={showAddForm}
                     createNewFood={createNewFood}
-                    handleDeleteDish={handleDeleteDish}
                 />
             </section>
             <section className='feature--container mt-3 mx-2 fade-up'>

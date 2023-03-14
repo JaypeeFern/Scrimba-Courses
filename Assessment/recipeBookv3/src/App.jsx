@@ -5,7 +5,7 @@ import Dish from './components/Dish'
 import Forms from "./forms/Forms";
 import { nanoid } from 'nanoid'
 import { db } from './firebase/firebase'
-import { doc, addDoc, getDocs, deleteDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { doc, addDoc, getDocs, getDoc, deleteDoc, updateDoc, collection, serverTimestamp, query, where} from 'firebase/firestore'
 import './styles.css'
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
   const [food, setFood] = React.useState([])
 
   // Create state for dish ID
-  const [currentFoodId, setCurrentFoodId] = React.useState((food[0] && food[0].id) || '')
+  const [currentFoodId, setCurrentFoodId] = React.useState('')
 
   // Get the data from the database collection "food" in Firebase
   async function getData() {
@@ -27,6 +27,7 @@ function App() {
         documents.push({ id: doc.id, ...doc.data() });
       });
       setFood(documents);
+      setCurrentFoodId(documents[0] ? documents[0].id : '');
     } catch (error) {
       console.log("Error getting documents: ", error);
     }
@@ -54,9 +55,7 @@ function App() {
         }
       });
       const data = await response.json();
-      // console.log(data);
       const randomIndex = Math.floor(Math.random() * data.photos.length);
-      // setImageUrl(data.photos[randomIndex].src.large);
       setImageUrl({
         url: data.photos[randomIndex].src.large,
         name: data.photos[randomIndex].alt
@@ -88,41 +87,6 @@ function App() {
     setCurrentFoodId(newDocId);
   };
 
-  // Delete a dish
-  function deleteDish(event, foodId) {
-    event.preventDefault()
-    // Filter the dish array and return a new array without the dish that has the same ID as the dish ID that was passed in
-    setFood(prevFoods => prevFoods.filter(prevFood => prevFood.id !== foodId))
-  }
-  
-  // FEATURE NOT TESTED YET IMPORTANTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-  async function deleteFromFirestore(collectionName, docId) {
-    try {
-      if (!docId) {
-        throw new Error("Document ID is empty or undefined");
-      }
-  
-      const collectionRef = collection(db, collectionName);
-      const documentRef = doc(collectionRef, docId);
-      await deleteDoc(documentRef);
-      console.log("Document successfully deleted!");
-    } catch (error) {
-      console.error("Error deleting document: ", error);
-    }
-  }
-
-  async function handleDeleteDish(event, currentFoodId) {
-    event.preventDefault()
-    try {
-      await deleteFromFirestore("food", currentFoodId);
-      console.log("Document successfully deleted!");
-    } catch (error) {
-      console.error("Error deleting document: ", error);
-    }
-  }
-  // FEATURE NOT TESTED YET IMPORTANTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-
-
   // Create state for the forms to show or hide
   const [showAddForm, setShowAddForm] = React.useState(false);
   const [showUpdateForm, setShowUpdateForm] = React.useState(false);
@@ -145,64 +109,98 @@ function App() {
     setShowUpdateForm(true)
   }
 
+  // Get Document ID from Firestore
+  async function getDocumentId(id) {
+    try {
+      const collectionRef = collection(db, "food"); // Get the collection
+      const q = query(collectionRef, where("id", "==", id)); // Query the collection
+      const querySnapshot = await getDocs(q); // Get the query snapshot
+      let docId;  // Declare a variable to store the document ID
+      querySnapshot.forEach((doc) => { 
+        docId = doc.id;
+      });
+      return docId;
+    } catch (error) {
+      console.error("Error finding document ID: ", error);
+    }
+  }
+
+  // Delete a dish
+  async function deleteFromFirestore(docId) {
+    try {
+      if (!docId) {
+        throw new Error("Document ID is empty or undefined");
+      }
+
+      const collectionRef = collection(db, 'food'); // Get the collection
+      const documentRef = doc(collectionRef, docId); // Get the document
+      await deleteDoc(documentRef); // Delete the document
+      console.log("Document successfully deleted!"); 
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  }
+
   // Update a dish
-  function updateDish(event, foodId) {
-    event.preventDefault()
+  async function updateDish(event, foodId) {
+    event.preventDefault();
+    let docId
     // Find the object with the matching ID
-    const selectedFood = food.find(food => food.id === foodId);
+    const selectedFood = food.find((food) => food.id === foodId);
     if (selectedFood) {
       // Populate the form with the data from the selected object
       document.getElementById('currentFoodId').value = selectedFood.id;
       document.getElementById('foodName').value = selectedFood.foodName;
       document.getElementById('foodDescription').value = selectedFood.foodDescription;
-
+  
       // Add an event listener to the form submit button
-      document.getElementById('updateDish').addEventListener('click', function (event) {
-
+      document.getElementById('updateDish').addEventListener('click', async function (event) {
         event.preventDefault();
 
-        // Get the new values from the form
-        const updatedFood = {
-          foodId: document.getElementById('currentFoodId').value,
-          foodName: document.getElementById('foodName').value,
-          foodDescription: document.getElementById('foodDescription').value,
-        };
+        // Get the form data 
+        const foodId = document.getElementById('currentFoodId').value;
+        const foodName = document.getElementById('foodName').value;
+        const foodDescription = document.getElementById('foodDescription').value;
 
-        // Find the index of the object with the matching ID
-        const index = food.findIndex(food => food.id === updatedFood.foodId);
+        // Get the document ID
+        docId = await getDocumentId(foodId);
 
-        if (index >= 0) {
-          // Modify the existing object with the new values
-          food[index].foodName = updatedFood.foodName;
-          food[index].foodDescription = updatedFood.foodDescription;
-
-          // Update the data in local storage
-          localStorage.setItem('food', JSON.stringify(food));
-
-          // Update the state
-          setFood(food);
-          setShowAddForm(true)
-          setShowUpdateForm(false);
-
-          // console.log(food[index]);
-        } else {
-          console.log(`Food with ID ${updatedFood.foodId} not found.`);
+        // Update the document in Firestore
+        try {
+          const foodRef = doc(db, 'food', docId);
+          await updateDoc(foodRef, {
+            foodName: foodName,
+            foodDescription: foodDescription
+          })
+          console.log("Document successfully updated!");
+        } catch (error) {
+          console.error("Error updating document: ", error);
         }
+
+        // Update States
+        getData()
+        setShowAddForm(true)
+        setShowUpdateForm(false);
 
       });
 
-      // document.getElementById('deleteDish').addEventListener('click', function (event) {
-      //   event.preventDefault();
-      //   deleteDish(event, foodId);
-      //   setShowAddForm(true)
-      //   setShowUpdateForm(false);
-      // });
+      document.getElementById('deleteDish').addEventListener('click', async function (event) {
+        event.preventDefault()
+
+        // Get the document ID
+        docId = await getDocumentId(foodId);
+        // Delete the document from Firestore
+        deleteFromFirestore(docId)
+        // Update States
+        getData()
+
+      });
 
     } else {
       console.log(`Food with ID ${foodId} not found.`);
     }
   }
-
+  
   // Update a dish with the form showing after 200ms delay to allow the form to show first
   function updateDishWithForm(event, foodId) {
     handleShowUpdateForm(event);
@@ -233,9 +231,7 @@ function App() {
         foodName={food.foodName}
         foodDescription={food.foodDescription}
         foodImage={food.foodImage}
-        deleteDish={deleteDish}
         updateDishWithForm={updateDishWithForm}
-
         handleModalClose={handleModalClose}
         handleModalShow={handleModalShow}
         showModal={showModal}
@@ -248,15 +244,13 @@ function App() {
     <div className='main-container'>
       <Navbar />
       <Body
-        dishElements={dishElements}
         currentFoodId={food.id}
+        dishElements={dishElements}
         Forms={Forms}
         showUpdateForm={showUpdateForm}
         showAddForm={showAddForm}
-        deleteDish={deleteDish}
         handleShowAddForm={handleShowAddForm}
         createNewFood={createNewFood}
-        handleDeleteDish={handleDeleteDish}
       />
     </div>
   )
@@ -270,4 +264,15 @@ export default App
   //   event.preventDefault()
   //   showAddForm(true);
   //   setShowUpdateForm(false);
+  // }
+
+
+  // async function handleDeleteDish(event, docId) {
+  //   event.preventDefault()
+  //   try {
+  //     await deleteFromFirestore("food", docId);
+  //     console.log("Document successfully deleted!");
+  //   } catch (error) {
+  //     console.error("Error deleting document: ", error);
+  //   }
   // }

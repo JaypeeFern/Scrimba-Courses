@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Update({currentFoodId, handleDeleteDish}) {
+export default function Update() {
   return (
     <div className="form--container">
-      <form className="form" onSubmit={(event) => handleDeleteDish(event, currentFoodId)}>
+      <form className="form">
         <input type="text" className="form-control" readOnly disabled hidden id="currentFoodId" />
         <div className="mb-3 w-75">
           <label htmlFor="foodName">Dish Name</label>
@@ -16,7 +16,7 @@ export default function Update({currentFoodId, handleDeleteDish}) {
         <div className="container text-center">
           <div className="row">
             <div className="col-6">
-              <button type="submit" className="btn btn-success" id="updateDish"> Update Dish</button>
+              <button type="submit" className="btn btn-success" id='updateDish'>Update Dish</button>
             </div>
             <div className="col-6">
               <button type="submit" className="btn btn-danger" id="deleteDish">Delete Dish</button>
@@ -27,3 +27,6 @@ export default function Update({currentFoodId, handleDeleteDish}) {
     </div>
   );
 }
+
+
+// onSubmit={(event) => handleDeleteDish(event, currentFoodId)}
