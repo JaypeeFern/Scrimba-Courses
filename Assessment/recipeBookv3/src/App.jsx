@@ -1,6 +1,7 @@
 import React from 'react'
-import Body from './components/Body'
 import Navbar from './components/Navbar'
+import Body from './components/Body'
+// import Footer from './components/Footer'
 import Dish from './components/Dish'
 import Forms from "./forms/Forms";
 import { nanoid } from 'nanoid'
@@ -40,7 +41,7 @@ function App() {
   // Random Food Image
   const [imageUrl, setImageUrl] = React.useState({
     url: '',
-    name: ''
+    name: '',
   });
 
   // API Key for Pexels
@@ -72,11 +73,15 @@ function App() {
     if (food === "") return;
 
     // Add new document to Firestore and get its id
+
+    const foodNameValue = event.target.foodName.value
+    const foodDescriptionValue = event.target.foodDescription.value
+
     const docRef = await addDoc(collectionRef, {
       id: nanoid(),
       createdAt: serverTimestamp(),
-      foodName: event.target.foodName.value !== '' ? event.target.foodName.value : imageUrl.name,
-      foodDescription: event.target.foodDescription.value,
+      foodName: foodNameValue !== '' ? foodNameValue : imageUrl.name,
+      foodDescription: foodDescriptionValue,
       foodImage: imageUrl.url
     });
 
@@ -191,6 +196,8 @@ function App() {
         docId = await getDocumentId(foodId);
         // Delete the document from Firestore
         deleteFromFirestore(docId)
+        setShowAddForm(true)
+        setShowUpdateForm(false);
         // Update States
         getData()
 
@@ -252,6 +259,7 @@ function App() {
         handleShowAddForm={handleShowAddForm}
         createNewFood={createNewFood}
       />
+      {/* <Footer/> */}
     </div>
   )
 }

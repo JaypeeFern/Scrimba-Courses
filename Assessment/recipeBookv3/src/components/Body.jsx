@@ -1,13 +1,29 @@
 import React from 'react'
+import Typewriter from 'typewriter-effect';
 
-export default function Body({currentFoodId, dishElements, Forms, showUpdateForm, showAddForm, handleShowAddForm, createNewFood}) {
+export default function Body({ currentFoodId, dishElements, Forms, showUpdateForm, showAddForm, handleShowAddForm, createNewFood }) {
+
+    const bodyText = "Welcome to my Dish Viewing App, a platform that showcases my skills in React! This app is the culmination of everything I've learned so far in React JS, and is designed to be a simple, tool for viewing descriptions of dishes."
+    const [isTypingComplete, setIsTypingComplete] = React.useState(false)
+
     return (
         <main className='body--main-container'>
             <section className='main--landing container-fluid mt-4'>
                 <div className='main--content text-white fs-5 fw-light'>
-                    <span className='fade-up'>Welcome to my Dish Viewing App, a platform that showcases my skills in React! This app is the culmination of everything I've learned so far in React JS, and is designed to be a simple, tool for viewing descriptions of dishes.</span>
+                    <Typewriter
+                        onInit={(typewriter) => {
+                            typewriter.pasteString(bodyText)
+                                .callFunction(() => {
+                                    setIsTypingComplete(true);
+                                })
+                                .start();
+                        }}
+                        options={{
+                            delay: 20,
+                        }}
+                    />
                     <br />
-                    <button type='button' onClick={(event) => handleShowAddForm(event)} className='fade-up btn btn-warning mt-3' id='showForm'>{showAddForm | showUpdateForm ? 'Hide Form' : 'Show Form'}</button>
+                    {isTypingComplete && <button type='button' onClick={(event) => handleShowAddForm(event)} className='fade-up btn btn-warning mt-3' id='showForm'>{showAddForm | showUpdateForm ? 'Hide Form' : 'Show Form'}</button>}
                 </div>
             </section>
             <section className={`forms--container ${showAddForm | showUpdateForm ? 'py-5' : ''}`}>
@@ -18,9 +34,12 @@ export default function Body({currentFoodId, dishElements, Forms, showUpdateForm
                     createNewFood={createNewFood}
                 />
             </section>
-            <section className='feature--container mt-3 mx-2 fade-up'>
-                {dishElements}
+            <section className={`feature--container my-3 mx-3 ${isTypingComplete ? 'fade-up' : ''}`}>
+                {isTypingComplete && dishElements}
             </section>
         </main>
     )
 }
+
+
+//  {/* <span className='fade-up'>Welcome to my Dish Viewing App, a platform that showcases my skills in React! This app is the culmination of everything I've learned so far in React JS, and is designed to be a simple, tool for viewing descriptions of dishes.</span> */}
