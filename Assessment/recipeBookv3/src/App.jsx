@@ -6,7 +6,8 @@ import Dish from './components/Dish'
 import Forms from "./forms/Forms";
 import { nanoid } from 'nanoid'
 import { db } from './firebase/firebase'
-import { doc, addDoc, getDocs, getDoc, deleteDoc, updateDoc, collection, serverTimestamp, query, where} from 'firebase/firestore'
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, addDoc, getDocs, getDoc, deleteDoc, updateDoc, collection, serverTimestamp, query, where } from 'firebase/firestore'
 import './styles.css'
 
 function App() {
@@ -66,25 +67,88 @@ function App() {
     fetchImage();
   }, [currentFoodId]);
 
+  // Create state for the link to the image in Firebase Storage
+  const [imageLink, setImageLink] = React.useState(null)
+  // Handle the upload of the image to Firebase Storage
+  const handleUpload = (event, imageLink) => {
+    const storage = getStorage();
+    const metadata = {
+      contentType: 'image/jpeg'
+    };
+    const storageRef = ref(storage, 'images/' + imageLink.name);
+    const uploadTask = uploadBytesResumable(storageRef, imageLink, metadata);
+  
+    return new Promise((resolve, reject) => {
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        },
+        (error) => {
+          switch (error.code) {
+            case 'storage/unauthorized':
+              reject(error);
+              break;
+            case 'storage/canceled':
+              reject(error);
+              break;
+            case 'storage/unknown':
+              reject(error);
+              break;
+          }
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              setImageLink(downloadURL);
+              resolve(downloadURL);
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        }
+      );
+    });
+  };
+
   // Create a new dish
+  
   // Add a dish to the database collection "food" in Firebase
   const createNewFood = async (event) => {
     event.preventDefault()
     if (food === "") return;
 
-    // Add new document to Firestore and get its id
-
+    // Get the values from the form
     const foodNameValue = event.target.foodName.value
     const foodDescriptionValue = event.target.foodDescription.value
+    const dishImage = event.target.dishImage.files[0];
 
+    // Call handleUpload function to upload the image to Firebase Storage
+    let downloadURL 
+    if (dishImage) {
+      downloadURL = await handleUpload(event, dishImage);
+    } else {
+      downloadURL = imageUrl.url
+    }
+
+    // Add the data to the database collection "food" in Firebase
     const docRef = await addDoc(collectionRef, {
       id: nanoid(),
       createdAt: serverTimestamp(),
       foodName: foodNameValue !== '' ? foodNameValue : imageUrl.name,
       foodDescription: foodDescriptionValue,
-      foodImage: imageUrl.url
+      foodImage: downloadURL,
     });
 
+    // Get the new document ID
     const newDocId = docRef.id;
 
     // Update state to trigger useEffect that will rerender the page showing the new data
@@ -121,7 +185,7 @@ function App() {
       const q = query(collectionRef, where("id", "==", id)); // Query the collection
       const querySnapshot = await getDocs(q); // Get the query snapshot
       let docId;  // Declare a variable to store the document ID
-      querySnapshot.forEach((doc) => { 
+      querySnapshot.forEach((doc) => {
         docId = doc.id;
       });
       return docId;
@@ -140,7 +204,7 @@ function App() {
       const collectionRef = collection(db, 'food'); // Get the collection
       const documentRef = doc(collectionRef, docId); // Get the document
       await deleteDoc(documentRef); // Delete the document
-      console.log("Document successfully deleted!"); 
+      console.log("Document successfully deleted!");
     } catch (error) {
       console.error("Error deleting document: ", error);
     }
@@ -157,7 +221,7 @@ function App() {
       document.getElementById('currentFoodId').value = selectedFood.id;
       document.getElementById('foodName').value = selectedFood.foodName;
       document.getElementById('foodDescription').value = selectedFood.foodDescription;
-  
+
       // Add an event listener to the form submit button
       document.getElementById('updateDish').addEventListener('click', async function (event) {
         event.preventDefault();
@@ -207,7 +271,7 @@ function App() {
       console.log(`Food with ID ${foodId} not found.`);
     }
   }
-  
+
   // Update a dish with the form showing after 200ms delay to allow the form to show first
   function updateDishWithForm(event, foodId) {
     handleShowUpdateForm(event);
