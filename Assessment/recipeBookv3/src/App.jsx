@@ -5,7 +5,7 @@ import Dish from './components/Dish'
 import Forms from "./forms/Forms";
 import { nanoid } from 'nanoid'
 import { db } from './firebase/firebase'
-import { addDoc, getDocs, collection, serverTimestamp } from 'firebase/firestore'
+import { doc, addDoc, getDocs, deleteDoc, collection, serverTimestamp } from 'firebase/firestore'
 import './styles.css'
 
 function App() {
@@ -67,40 +67,26 @@ function App() {
   }, [currentFoodId]);
 
   // Create a new dish
-  function createNewFood(event) {
+  // Add a dish to the database collection "food" in Firebase
+  const createNewFood = async (event) => {
     event.preventDefault()
-    const newFood = { // Create a new dish object
+    if (food === "") return;
+
+    // Add new document to Firestore and get its id
+    const docRef = await addDoc(collectionRef, {
       id: nanoid(),
+      createdAt: serverTimestamp(),
       foodName: event.target.foodName.value !== '' ? event.target.foodName.value : imageUrl.name,
       foodDescription: event.target.foodDescription.value,
       foodImage: imageUrl.url
-    }
-    // Add the new dish to the state array if the dish name is not empty
-    if (newFood.foodName !== '') {
-      setFood(prevFood => [...prevFood, newFood])
-    } else {
-      alert('Please enter dish name')
-    }
-    // Set the new dish as the current dish ID
-    setCurrentFoodId(newFood.id)
-  }
+    });
 
-  // IMPORTANT!!!!!! THIS FUNCTION HAS NOT BEEN TESTED YET
-  // Add a dish to the database collection "food" in Firebase
-  const fireBaseHandleSubmit = async (e) => {
-    e.preventDefault()
-    if (food === "") return;
+    const newDocId = docRef.id;
 
-    await addDoc(collectionRef, {
-      id: nanoid(),
-      createdAt: serverTimestamp(),
-      foodName: '',
-      foodDescription: '',
-      foodImage: ''
-    })
-    setFood("")
-  }
-  // IMPORTANT!!!!!! THIS FUNCTION HAS NOT BEEN TESTED YET
+    // Update state to trigger useEffect that will rerender the page showing the new data
+    setFood([]);
+    setCurrentFoodId(newDocId);
+  };
 
   // Delete a dish
   function deleteDish(event, foodId) {
@@ -108,6 +94,34 @@ function App() {
     // Filter the dish array and return a new array without the dish that has the same ID as the dish ID that was passed in
     setFood(prevFoods => prevFoods.filter(prevFood => prevFood.id !== foodId))
   }
+  
+  // FEATURE NOT TESTED YET IMPORTANTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+  async function deleteFromFirestore(collectionName, docId) {
+    try {
+      if (!docId) {
+        throw new Error("Document ID is empty or undefined");
+      }
+  
+      const collectionRef = collection(db, collectionName);
+      const documentRef = doc(collectionRef, docId);
+      await deleteDoc(documentRef);
+      console.log("Document successfully deleted!");
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  }
+
+  async function handleDeleteDish(event, currentFoodId) {
+    event.preventDefault()
+    try {
+      await deleteFromFirestore("food", currentFoodId);
+      console.log("Document successfully deleted!");
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  }
+  // FEATURE NOT TESTED YET IMPORTANTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+
 
   // Create state for the forms to show or hide
   const [showAddForm, setShowAddForm] = React.useState(false);
@@ -177,12 +191,12 @@ function App() {
 
       });
 
-      document.getElementById('deleteDish').addEventListener('click', function (event) {
-        event.preventDefault();
-        deleteDish(event, foodId);
-        setShowAddForm(true)
-        setShowUpdateForm(false);
-      });
+      // document.getElementById('deleteDish').addEventListener('click', function (event) {
+      //   event.preventDefault();
+      //   deleteDish(event, foodId);
+      //   setShowAddForm(true)
+      //   setShowUpdateForm(false);
+      // });
 
     } else {
       console.log(`Food with ID ${foodId} not found.`);
@@ -235,13 +249,14 @@ function App() {
       <Navbar />
       <Body
         dishElements={dishElements}
+        currentFoodId={food.id}
         Forms={Forms}
-        createNewFood={createNewFood}
         showUpdateForm={showUpdateForm}
         showAddForm={showAddForm}
         deleteDish={deleteDish}
         handleShowAddForm={handleShowAddForm}
-        fireBaseHandleSubmit={fireBaseHandleSubmit}
+        createNewFood={createNewFood}
+        handleDeleteDish={handleDeleteDish}
       />
     </div>
   )

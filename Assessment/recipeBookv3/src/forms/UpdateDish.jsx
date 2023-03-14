@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Update() {
+export default function Update({currentFoodId, handleDeleteDish}) {
   return (
     <div className="form--container">
-      <form className="form">
+      <form className="form" onSubmit={(event) => handleDeleteDish(event, currentFoodId)}>
         <input type="text" className="form-control" readOnly disabled hidden id="currentFoodId" />
         <div className="mb-3 w-75">
           <label htmlFor="foodName">Dish Name</label>
