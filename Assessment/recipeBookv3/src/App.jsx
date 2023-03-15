@@ -1,12 +1,13 @@
 import React from 'react'
 import Navbar from './components/Navbar'
 import Body from './components/Body'
-// import Footer from './components/Footer'
 import Dish from './components/Dish'
 import Forms from "./forms/Forms";
 import { nanoid } from 'nanoid'
 import { db } from './firebase/firebase'
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 import { doc, addDoc, getDocs, getDoc, deleteDoc, updateDoc, collection, serverTimestamp, query, where } from 'firebase/firestore'
 import './styles.css'
 
@@ -45,9 +46,6 @@ function App() {
     name: '',
   });
 
-  // API Key for Pexels
-  // TmvsB31UhnWsaSc1eweoin54jJkU8D59cu4UEdNuGmFYtQCiqAdoGdqh
-
   React.useEffect(() => {
     const randomNumber = Math.floor(Math.random() * 25) + 1;
     const fetchImage = async () => {
@@ -67,22 +65,27 @@ function App() {
     fetchImage();
   }, [currentFoodId]);
 
-  // Create state for the link to the image in Firebase Storage
-  const [imageLink, setImageLink] = React.useState(null)
   // Handle the upload of the image to Firebase Storage
+  let toastId = null;
   const handleUpload = (event, imageLink) => {
+
     const storage = getStorage();
     const metadata = {
       contentType: 'image/jpeg'
     };
     const storageRef = ref(storage, 'images/' + imageLink.name);
     const uploadTask = uploadBytesResumable(storageRef, imageLink, metadata);
-  
+
     return new Promise((resolve, reject) => {
       uploadTask.on('state_changed',
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
+          const progress = Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          // console.log('Upload is ' + progress + '% done');
+          toast.update(toastId, {
+            render: `Uploading image... ${progress}%`,
+            type: toast.TYPE.INFO,
+            autoClose: false,
+          })
           switch (snapshot.state) {
             case 'paused':
               console.log('Upload is paused');
@@ -108,7 +111,7 @@ function App() {
         () => {
           getDownloadURL(uploadTask.snapshot.ref)
             .then((downloadURL) => {
-              setImageLink(downloadURL);
+              // setImageLink(downloadURL);
               resolve(downloadURL);
             })
             .catch((error) => {
@@ -120,7 +123,7 @@ function App() {
   };
 
   // Create a new dish
-  
+
   // Add a dish to the database collection "food" in Firebase
   const createNewFood = async (event) => {
     event.preventDefault()
@@ -132,9 +135,11 @@ function App() {
     const dishImage = event.target.dishImage.files[0];
 
     // Call handleUpload function to upload the image to Firebase Storage
-    let downloadURL 
+    let downloadURL
     if (dishImage) {
+      toastId = toast('Uploading image...', { autoClose: false });
       downloadURL = await handleUpload(event, dishImage);
+      toast.dismiss(toastId);
     } else {
       downloadURL = imageUrl.url
     }
@@ -150,6 +155,9 @@ function App() {
 
     // Get the new document ID
     const newDocId = docRef.id;
+
+    // Show a notification
+    toast.success('Food added successfully!');
 
     // Update state to trigger useEffect that will rerender the page showing the new data
     setFood([]);
@@ -231,6 +239,16 @@ function App() {
         const foodName = document.getElementById('foodName').value;
         const foodDescription = document.getElementById('foodDescription').value;
 
+        // Check if a file is uploaded
+        const imageInput = document.getElementById('dishImage');
+        if (imageInput.files.length > 0) {
+          const imageFile = imageInput.files[0];
+          toastId = toast('Uploading image...', { autoClose: false });
+          const imageUrl = await handleUpload(event, imageFile);
+          toast.dismiss(toastId);
+          selectedFood.foodImage = imageUrl;
+        }
+
         // Get the document ID
         docId = await getDocumentId(foodId);
 
@@ -239,9 +257,11 @@ function App() {
           const foodRef = doc(db, 'food', docId);
           await updateDoc(foodRef, {
             foodName: foodName,
-            foodDescription: foodDescription
+            foodDescription: foodDescription,
+            foodImage: selectedFood.foodImage
           })
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
+          toast.info('Food updated successfully!')
         } catch (error) {
           console.error("Error updating document: ", error);
         }
@@ -258,8 +278,28 @@ function App() {
 
         // Get the document ID
         docId = await getDocumentId(foodId);
+        // Get the selected food object
+        const selectedFood = food.find((food) => food.id === foodId);
+        if (selectedFood && selectedFood.foodImage) {
+          // Check if the image is from Pexels
+          if (selectedFood.foodImage.includes('images.pexels.com')) {
+            deleteFromFirestore(docId)
+          } else {
+            // Delete the corresponding image file from Firebase Storage
+            const storage = getStorage();
+            const imageRef = ref(storage, selectedFood.foodImage);
+            console.log(imageRef)
+            try {
+              await deleteObject(imageRef);
+              console.log(`Image file ${selectedFood.foodImage} successfully deleted from Firebase Storage.`);
+            } catch (error) {
+              console.error(`Error deleting image file ${selectedFood.foodImage} from Firebase Storage:`, error);
+            }
+          }
+        }
         // Delete the document from Firestore
         deleteFromFirestore(docId)
+        toast.success('Food deleted successfully!')
         setShowAddForm(true)
         setShowUpdateForm(false);
         // Update States
@@ -313,6 +353,17 @@ function App() {
 
   return (
     <div className='main-container'>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       <Navbar />
       <Body
         currentFoodId={food.id}
@@ -323,7 +374,6 @@ function App() {
         handleShowAddForm={handleShowAddForm}
         createNewFood={createNewFood}
       />
-      {/* <Footer/> */}
     </div>
   )
 }

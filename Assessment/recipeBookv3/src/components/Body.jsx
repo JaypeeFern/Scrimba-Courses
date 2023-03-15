@@ -6,11 +6,11 @@ export default function Body({ currentFoodId, dishElements, Forms, showUpdateFor
     const [isTypingComplete, setIsTypingComplete] = React.useState(false)
     return (
         <main className='body--main-container'>
-            <section className='main--landing container-fluid mt-4'>
+            <section className='main--landing container-fluid mt-4 mb-3'>
                 <div className='main--content text-white fs-5 fw-light'>
                     <Typewriter
                         onInit={(typewriter) => {
-                            typewriter.typeString(bodyText)
+                            typewriter.pasteString(bodyText)
                                 .callFunction(() => {
                                     setIsTypingComplete(true);
                                 })
@@ -32,7 +32,7 @@ export default function Body({ currentFoodId, dishElements, Forms, showUpdateFor
                     createNewFood={createNewFood}
                 />
             </section>
-            <section className={`feature--container my-3 mx-3 ${isTypingComplete ? 'fade-up' : ''}`}>
+            <section className={`feature--container mx-3 ${isTypingComplete ? 'fade-up' : ''}`}>
                 {isTypingComplete && dishElements}
             </section>
         </main>

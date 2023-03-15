@@ -13,7 +13,11 @@ export default function Update() {
           <label htmlFor="foodDescription">Dish Description</label>
           <textarea className="form-control" id="foodDescription" />
         </div>
-        <div className="container text-center">
+        <div className="mb-3 w-75">
+          <label className="form-label" htmlFor="dishImage">Upload Image</label>
+          <input className="form-control" type="file" id="dishImage" />
+        </div>
+        <div className="container text-center mt-3">
           <div className="row">
             <div className="col-6">
               <button type="submit" className="btn btn-success" id='updateDish'>Update Dish</button>
