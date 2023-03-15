@@ -288,7 +288,6 @@ function App() {
             // Delete the corresponding image file from Firebase Storage
             const storage = getStorage();
             const imageRef = ref(storage, selectedFood.foodImage);
-            console.log(imageRef)
             try {
               await deleteObject(imageRef);
               console.log(`Image file ${selectedFood.foodImage} successfully deleted from Firebase Storage.`);
