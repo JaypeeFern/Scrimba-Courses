@@ -2,7 +2,7 @@ import React from 'react'
 import Typewriter from 'typewriter-effect';
 
 export default function Body({ currentFoodId, dishElements, Forms, showUpdateForm, showAddForm, handleShowAddForm, createNewFood }) {
-    const bodyText = "Welcome to my Dish Viewing App, a platform that showcases my skills in React! This app is the culmination of everything I've learned so far in React JS, and is designed to be a simple, tool for viewing descriptions of dishes."
+    const bodyText = "Welcome to my Food Journal App, a platform that showcases my skills in React! This app is the culmination of everything I've learned so far in React JS, and is designed to be a simple, tool for viewing descriptions of dishes."
     const [isTypingComplete, setIsTypingComplete] = React.useState(false)
     return (
         <main className='body--main-container'>
@@ -10,7 +10,7 @@ export default function Body({ currentFoodId, dishElements, Forms, showUpdateFor
                 <div className='main--content text-white fs-5 fw-light'>
                     <Typewriter
                         onInit={(typewriter) => {
-                            typewriter.pasteString(bodyText)
+                            typewriter.typeString(bodyText)
                                 .callFunction(() => {
                                     setIsTypingComplete(true);
                                 })
