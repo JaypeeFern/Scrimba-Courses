@@ -1,0 +1,106 @@
+/* Global */
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    font-family: 'Inter';
+    background-color: rgba(11, 36, 52, 1);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(245, 245, 245, 1);
+    width: 320px;
+    height: 320px;
+    border-radius: 10px;
+    margin: 20px auto 0 auto;
+}
+
+/* End Global */
+
+/* Header */
+
+.header--container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header--title {
+    font-family: 'Karla';
+    font-weight: bold;
+    line-height: 36px;
+    letter-spacing: -0.003em;
+    font-size: 25px;
+}
+
+.header--desc {
+    font-weight: 400;
+    font-size: 13.1072px;
+    line-height: 16px;
+    letter-spacing: -0.003em;
+    color: #4A4E74;
+    text-align: center;
+    margin-bottom: 1.4rem;
+    width: 250px;
+}
+
+/* End Header */
+
+/* Die */
+
+.die--container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 17.92px;
+
+}
+
+.die {
+    background-color: rgba(255, 255, 255, 1);
+    width: 35.84px;
+    height: 35.84px;
+    border-radius: 3.81px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.die-roll-btn {
+    margin: 25px 0 0 0;
+    background: #5035FF;
+    box-shadow: 0px 3.2px 7.68px rgba(0, 0, 0, 0.18);
+    border-radius: 3.81277px;
+    width: 92.16px;
+    height: 35.84px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.die-roll-btn:hover {
+    background-color: #5b48ff;
+  }
+  
+.die-roll-btn:active {
+    box-shadow: 0px 1.2px 2.88px rgba(0, 0, 0, 0.18);
+  }
+
+.die-roll-btn:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 2px rgba(80, 53, 255, 0.4);
+  }
+
+/* End Die */
