@@ -1,30 +1,31 @@
 import React from 'react'
 import Die from './components/Die'
+import { nanoid } from 'nanoid'
 
 function App() {
 
   // Create a function to generate a new array of 10 random numbers between 1 and 6
   function allNewDice() {
-    const arr = []
+    const newDice = []
     for (let i = 0; i < 10; i++) {
-      arr.push( Math.floor(Math.random() * (6 - 1 + 1) + 1))
+      newDice.push({
+        id: nanoid(),
+        value: Math.ceil(Math.random() * 6),
+        isHeld: false
+      })
     }
-    return arr
+    return newDice
   }
 
   // Create state to hole dice numbers 
-  const [diceNumbers, setDiceNumbers] = React.useState(allNewDice())
+  const [dice, setDice] = React.useState(allNewDice())
 
   // Map over the state to generate our array and render those elements to the DOM
-  const diceElements = [
-    diceNumbers.map((number, index) => {
-      return <Die key={index} value={number} />
-    })
-  ]
+  const diceElements = dice.map(die => <Die key={die.id} value={die.value} />)
 
   // Create a function to roll the dice
   function rollNewDice() {
-    setDiceNumbers(allNewDice())
+    setDice(allNewDice())
   }
 
   return (
@@ -34,7 +35,7 @@ function App() {
         <span className='header--desc'>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</span>
       </section>
       <section className='die--container'>
-      {diceElements}
+        {diceElements}
       </section>
       <button type='button' onClick={rollNewDice} className='die-roll-btn' >Roll</button>
     </main>
