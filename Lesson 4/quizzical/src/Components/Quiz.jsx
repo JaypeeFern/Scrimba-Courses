@@ -1,7 +1,7 @@
 import React from 'react'
 import he from 'he';
 
-export default function Quiz({ quiz, quizQuestions, quizAnswers, getAnswers }) {
+export default function Quiz({ quiz, quizQuestions, quizAnswers, correctAnswer, getAnswers }) {
 
     // Create a style object to show the quiz component when the game starts  
     const style = {

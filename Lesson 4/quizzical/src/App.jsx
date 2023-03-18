@@ -43,13 +43,13 @@ function App() {
   }
 
   // Map through the questions and create a new array with the Quiz component
-  const quizQuestions = questions.map((question, index) => (
+  const quizQuestions = questions.map(question => (
     <Quiz
       key={nanoid()}
-      index={index}
       quiz={quiz}
       quizQuestions={question.question}
-      quizAnswers={question.incorrect_answers.concat(question.correct_answer)}
+      quizAnswers={question.incorrect_answers.concat(question.correct_answer).sort(() => Math.random() - 0.5)}
+      correctAnswer={question.correct_answer}
       getAnswers={getAnswers}
     />
   ))
@@ -65,7 +65,6 @@ function App() {
         <div className='quiz--wrapper'>
           <form>
             {quizQuestions}
-            {/* <button>Submit</button> */}
           </form>
         </div>
       </section>}
