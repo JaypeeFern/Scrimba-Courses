@@ -19,7 +19,3 @@ export default function Quiz({ quiz, quizQuestions, quizAnswers, correctAnswer, 
         </div>
     )
 }
-
-{/* <button onClick={(event) => getAnswers(event)} type='button' className='quiz--choice'>Hola</button>
-<button onClick={(event) => getAnswers(event)} type='button' className='quiz--choice'>Au Revoir</button>
-<button onClick={(event) => getAnswers(event)} type='button' className='quiz--choice'>Salir</button> */}
