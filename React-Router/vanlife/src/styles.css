@@ -1,0 +1,348 @@
+/* -------------------------------------------------------------------------- */
+/*                                   GLOBAL                                   */
+/* -------------------------------------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    font-family: 'Inter', sans-serif;
+    padding: 0;
+    margin: 0;
+    width: 548px;
+    margin: 24px auto 24px auto;
+    background-color: rgb(28, 28, 28);
+}
+
+#root {
+    background-color: white;
+}
+
+/* ------------------------------- END GLOBAL ------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                                   NAVBAR                                   */
+/* -------------------------------------------------------------------------- */
+
+.nav--container {
+    padding: 24px 35px 24px 35px;
+    background-color: white;
+}
+
+.nav--wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav--brand {
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 25px;
+    line-height: 40px;
+    color: black;
+}
+
+.nav {
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.nav--items,
+.nav--items>a {
+    list-style: none;
+    color: #4D4D4D;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 23px;
+    gap: 15px;
+}
+
+/* ------------------------------- END NAVBAR ------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                                    HOME                                    */
+/* -------------------------------------------------------------------------- */
+
+.home--container {
+    position: relative;
+    height: calc(100vh - 155px);
+}
+
+.home--wrapper {
+    height: 100%;
+    background-image: url(src/assets/hero.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home--content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 23px;
+    color: white;
+    max-width: 450px;
+}
+
+.home--title {
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 42px;
+}
+
+.home--desc {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.home--btn {
+    padding: 12px 24px 12px 24px;
+    background-color: #FF8C38;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 32px;
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: all 0.2s ease-in-out;
+}
+
+.home--btn:hover {
+    background-color: #FFA500;
+    transition: all 0.2s ease-in-out;
+}
+
+.home--btn:active {
+    background-color: #FF8C38;
+    transition: all 0.2s ease-in-out;
+}
+
+/* -------------------------------- END HOME -------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                                    ABOUT                                   */
+/* -------------------------------------------------------------------------- */
+
+.about--body, .about--footer {
+    padding: 0px 35px 0px 35px;
+    margin-bottom: 55px;
+}
+
+.about--body h1 {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    margin-top: 48px;
+    color: #161616;
+}
+
+.about--body p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 31px;
+    color: #161616;
+}
+
+.about--footer {
+    background-color: #FFCC8D;
+    margin: 0 35px 45px 35px;
+    padding: 35px 40px 35px 40px;
+}
+
+.about--footer h1 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    color: #161616;
+}
+
+.about--footer button {
+    padding: 12px 24px 12px 24px;
+    background-color: #161616;;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 32px;
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: 25px;
+}
+
+.about--img {
+    height: 223px;
+}
+
+.about--img img {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* -------------------------------- END ABOUT ------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                                   FOOTER                                   */
+/* -------------------------------------------------------------------------- */
+
+.footer--container {
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(37, 37, 37);
+    color: rgb(170, 170, 170);
+    padding: 24px 0 24px 0;
+}
+
+.footer--wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer--text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+}
+
+/* ------------------------------- END FOOTER ------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                                    VANS                                    */
+/* -------------------------------------------------------------------------- */
+
+.van--container {
+    padding: 0 27px 0 27px;
+    margin: 54px 0 83px 0;
+}
+
+.van--options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.van--options-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 34px;
+}
+
+.van--options-choices {
+    display: flex;
+    gap: 20px;
+}
+
+.van--options-choices button:nth-child(-n+3) {
+    width: 104px;
+    height: 37px;
+    border: none;
+    background-color: #FFEAD0;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 23px;
+    cursor: pointer;
+}
+
+.van--options-choices button:last-child {
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 23px;
+    color: #4D4D4D;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.van--list--container {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.van--item {
+    margin-top: 26px;
+    flex: 1;
+}
+
+.van--img-container {
+    width: 229px;
+    height: 229px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.van--img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.van--info {
+    position: relative;
+    max-width: 228px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.van--name, .van--rate {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+}
+
+.van--type {
+    width: 85px;
+    height: 35px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 32px;
+    color: #FFEAD0;
+    background-color: #E17654;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 3px;
+    text-transform: capitalize;
+}
+
+.day {
+    position: absolute;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 32px;
+    color: #161616;
+    top: 19px;
+    right: 0;
+}
+
+/* -------------------------------- END VANS -------------------------------- */
