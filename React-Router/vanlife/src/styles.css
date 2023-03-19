@@ -64,6 +64,21 @@ html {
     font-size: 16px;
     line-height: 23px;
     gap: 15px;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav--items > a:hover {
+    color: #000000;
+    text-decoration: underline;
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.1);
+}
+
+.active {
+    color: #000000 !important;
+    font-weight: bold !important;
+    text-decoration: underline !important;
+    transform: scale(1.1);
 }
 
 /* ------------------------------- END NAVBAR ------------------------------- */

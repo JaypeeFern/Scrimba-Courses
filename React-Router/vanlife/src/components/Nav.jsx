@@ -1,15 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 export default function Nav() {
+
+    function isActive({ isActive }) {
+        return isActive ? 'active' : null;
+    }
+
     return (
         <div className="nav--container">
             <div className="nav--wrapper">
                 <Link className="nav--brand" to='/'>#VANLIFE</Link>
                 <nav className='nav'>
                     <ul className='nav--items'>
-                        <Link to='/about'>About</Link>
-                        <Link to='/vans'>Vans</Link>
+                        <NavLink className={isActive} to='/host'>Host</NavLink>
+                        <NavLink className={isActive} to='/about'>About</NavLink>
+                        <NavLink className={isActive} to='/vans'>Vans</NavLink>
                     </ul>
                 </nav>
             </div>
