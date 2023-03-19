@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-export default function Vans({ vanData, vanImage, vanName, vanPrice, vanType }) {
+export default function Vans({ vanData }) {
 
     const types = {
         type: {
@@ -13,7 +14,7 @@ export default function Vans({ vanData, vanImage, vanName, vanPrice, vanType }) 
     const typeEntries = Object.entries(types.type)
 
     const VanItems = vanData.map(item => (
-        <div key={item.id} className="van--item">
+        <Link to={`/vans/${item.id}`} key={item.id} className="van--item">
             <div className="van--img-container">
                 <img className="van--img" src={item.imageUrl}/>
             </div>
@@ -23,7 +24,7 @@ export default function Vans({ vanData, vanImage, vanName, vanPrice, vanType }) 
                 {typeEntries.map(([key, value]) => {
                     if (key === item.type) {
                         return (
-                            <div key={key} className="van--type" style={{ backgroundColor: value }}>
+                            <div key={item.id} className="van--type" style={{ backgroundColor: value }}>
                                 {item.type}
                             </div>
                         )
@@ -31,7 +32,7 @@ export default function Vans({ vanData, vanImage, vanName, vanPrice, vanType }) 
                 })}
                 <span className="day">/day</span>
             </div>
-        </div>
+        </Link>
     ))
 
     return (

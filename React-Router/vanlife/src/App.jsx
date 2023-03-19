@@ -1,10 +1,11 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom'
 import Nav from './components/Nav'
 import Home from './components/Home'
 import About from './components/About'
 import Footer from './components/Footer'
 import Vans from './components/Vans'
+import VanDetails from './components/VanDetails'
 import './server'
 
 function App() {
@@ -27,11 +28,8 @@ function App() {
       <Routes className='test'>
         <Route path='/' element={<Home/>} />
         <Route path='/about' element={<About/>} />
-        <Route path ='/vans' element={
-        <Vans 
-          vanData={vanData}
-        />
-        } />
+        <Route path ='/vans' element={<Vans vanData={vanData} />} />
+        <Route path ='/vans/:id' element={<VanDetails />} />
       </Routes>
       <Footer />
     </BrowserRouter>
