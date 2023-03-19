@@ -291,10 +291,19 @@ html {
 }
 
 .van--item {
+    transition: all 0.2s ease-in-out;
+    border-radius: 5px;
+    padding: 9px;
     text-decoration: none;
     color: black;
     margin-top: 26px;
     flex: 1;
+}
+
+.van--item:hover {
+    transition: all 0.2s ease-in-out;
+    border-radius: 5px;
+    background-color: #5251512c;
 }
 
 .van--img-container {
