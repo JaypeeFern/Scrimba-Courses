@@ -1,8 +1,8 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-export default function Photos({getHostVanDetail}) {
+import {useOutletContext } from 'react-router-dom'
 
-    const hostVanDetail = getHostVanDetail(useParams().id);
+export default function Photos() {
+    const [hostVanDetail, setHostVanDetail] = useOutletContext();
     return (
         <div className='photos--container'>
             <div className='photos--wrapper'>

@@ -17,8 +17,8 @@ export default function VanDetails() {
         <div className="van--details-container">
             <div className="van--details-wrapper">
                 <Link className="returntoVans" to='/vans'>{`<- Back to all vans`}</Link>
-                <div className="van--details-img-container"> 
-                    <img className="van--details-img" src={vanDetails.imageUrl}/>
+                <div className="van--details-img-container">
+                    <img className="van--details-img" src={vanDetails.imageUrl} />
                 </div>
                 <div className="van--details-info">
                     <span className="van--details-type">{vanDetails.type}</span>

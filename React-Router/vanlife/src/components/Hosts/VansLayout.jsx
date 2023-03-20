@@ -1,12 +1,26 @@
 import React from "react";
 import { useParams, Outlet, NavLink, Link } from "react-router-dom";
 
-export default function VansLayout({getHostVanDetail}) {
+export default function VansLayout() {
 
-    const hostVanDetail = getHostVanDetail(useParams().id);
+    const [hostVanDetail, setHostVanDetail] = React.useState([])
+    const { id } = useParams();
+
+    React.useEffect(() => {
+        fetch(`/api/host/vans/${id}`)
+          .then(response => response.json())
+          .then(data => {
+            setHostVanDetail(data.vans[0]);
+          });
+      }, []);
+
+    function OutletContext() {
+        return <Outlet context={[hostVanDetail, setHostVanDetail]} />;
+      }
+
     return (
         <div className="hostVanDetails--container">
-            <Link to='/host/vans' className="hostVanDetails--header">{'<- Back to all vans'}</Link>
+            <Link to='../vans' className="hostVanDetails--header">{'<- Back to all vans'}</Link>
             <div className="hostVanDetails--card">
                 <div className="hostVanDetails--card-image-container">
                     <img className="hostVanDetails--card-image" src={hostVanDetail.imageUrl} alt={hostVanDetail.name} />
@@ -23,7 +37,7 @@ export default function VansLayout({getHostVanDetail}) {
                     <NavLink to={`pricing`}>Pricing</NavLink>
                     <NavLink to={`photos`}>Photos</NavLink>
                 </nav>
-                <Outlet/>
+                {OutletContext()}
             </div>
         </div>
     )

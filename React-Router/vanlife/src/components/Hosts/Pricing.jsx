@@ -1,9 +1,8 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import {useOutletContext } from 'react-router-dom'
 
-export default function Pricing({getHostVanDetail}) {
-
-    const hostVanDetail = getHostVanDetail(useParams().id);
+export default function Pricing() {
+    const [hostVanDetail, setHostVanDetail] = useOutletContext();
     return (
         <div className='pricing--container'>
             <div className='pricing--wrapper'>

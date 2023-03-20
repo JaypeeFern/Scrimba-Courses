@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useParams, Outlet } from 'react-router-dom'
 /* ------------------------------------ x ----------------------------------- */
 import Layout from './components/Layout'
 import Home from './components/Vans/Home'
@@ -16,6 +16,7 @@ import HostVanDetails from './components/Hosts/HostVanDetails'
 import VansLayout from './components/Hosts/VansLayout'
 import Pricing from './components/Hosts/Pricing'
 import Photos from './components/Hosts/Photos'
+/* ------------------------------------ x ----------------------------------- */
 import './server'
 
 
@@ -45,21 +46,6 @@ function App() {
       })
   }, [])
 
-  // Function for returning Van Data based on the ID
-  function getHostVanDetail(hostVanId) {
-    const [hostVanDetail, setHostVanDetail] = React.useState([]);
-
-    React.useEffect(() => {
-      fetch(`/api/host/vans/${hostVanId}`)
-        .then(response => response.json())
-        .then(data => {
-          setHostVanDetail(data.vans[0]);
-        });
-    }, [hostVanId]);
-
-    return hostVanDetail;
-  }
-
   return (
     <BrowserRouter>
       <Routes>
@@ -72,10 +58,10 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path='income' element={<Income />} />
             <Route path='vans' element={<HostVans hostVanData={hostVanData} />} />
-            <Route path='vans/:id' element={<VansLayout getHostVanDetail={getHostVanDetail}/>}>
+            <Route path='vans/:id' element={<VansLayout />}>
               <Route index element={<HostVanDetails />} />
-              <Route path='pricing' element={<Pricing getHostVanDetail={getHostVanDetail}/>} />
-              <Route path='photos' element={<Photos getHostVanDetail={getHostVanDetail}/>} />
+              <Route path='pricing' element={<Pricing />} />
+              <Route path='photos' element={<Photos />} />
             </Route>
             <Route path='reviews' element={<Reviews />} />
           </Route>
