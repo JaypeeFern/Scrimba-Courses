@@ -29,15 +29,10 @@ export default function VansLayout() {
             <div className="hostVanDetails--nav-container">
                 <nav className="hostVanDetails--nav">
                     <NavLink end to={''}>Details</NavLink>
-                    <Link to={`pricing`}>Pricing</Link>
-                    <Link to={`photos`}>Photos</Link>
+                    <NavLink to={`pricing`}>Pricing</NavLink>
+                    <NavLink to={`photos`}>Photos</NavLink>
                 </nav>
-                <div className="hostVanDetails--nav-content">
-                    <span className="hostVanName"><b>Name:</b> {hostVanDetail.name}</span>
-                    <span className="hostVanType"><b>Category:</b> {hostVanDetail.type}</span>
-                    <span className="hostVanDesc"><b>Description:</b> {hostVanDetail.description}</span>
-                    <span className="hostVanVisibility"><b>Visiblity:</b> Public</span>
-                </div>
+                <Outlet/>
             </div>
         </div>
     )

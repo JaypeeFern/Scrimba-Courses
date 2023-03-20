@@ -14,9 +14,12 @@ export default function HostVanDetails() {
     }, [])
 
     return (
-        <>
-        <h1>Test</h1>
-        </>
+        <div className="hostVanDetails--nav-content">
+            <span className="hostVanName"><b>Name:</b> {hostVanDetail.name}</span>
+            <span className="hostVanType"><b>Category:</b> {hostVanDetail.type}</span>
+            <span className="hostVanDesc"><b>Description:</b> {hostVanDetail.description}</span>
+            <span className="hostVanVisibility"><b>Visiblity:</b> Public</span>
+        </div>
     )
 }
 
