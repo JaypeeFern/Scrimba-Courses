@@ -13,6 +13,12 @@ export default function HostVanDetails() {
             })
     }, [])
 
+    if(!hostVanDetail){
+        return (
+            <div>Loading...</div>
+        )
+    }
+
     return (
         <div className="hostVanDetails--nav-content">
             <span className="hostVanName"><b>Name:</b> {hostVanDetail.name}</span>

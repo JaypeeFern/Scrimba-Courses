@@ -74,8 +74,8 @@ function App() {
             <Route path='vans' element={<HostVans hostVanData={hostVanData} />} />
             <Route path='vans/:id' element={<VansLayout getHostVanDetail={getHostVanDetail}/>}>
               <Route index element={<HostVanDetails />} />
-              <Route path='pricing' element={<Pricing />} />
-              <Route path='photos' element={<Photos />} />
+              <Route path='pricing' element={<Pricing getHostVanDetail={getHostVanDetail}/>} />
+              <Route path='photos' element={<Photos getHostVanDetail={getHostVanDetail}/>} />
             </Route>
             <Route path='reviews' element={<Reviews />} />
           </Route>
