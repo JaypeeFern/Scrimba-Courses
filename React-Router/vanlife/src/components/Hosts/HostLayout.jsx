@@ -1,15 +1,18 @@
 import React from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, NavLink } from 'react-router-dom'
 
 export default function HostLayout() {
     return (
-        <>
-            <nav>
-                <Link to='/host'>Dashboard</Link>
-                <Link to='/host/income'>Income</Link>
-                <Link to='/host/reviews'>Reviews</Link>
+        <div className='host--layout-container'>
+            <nav className='host--nav'>
+                <NavLink end className='host--nav-item' to='/host'>Dashboard</NavLink>
+                <NavLink className='host--nav-item' to='/host/income'>Income</NavLink>
+                <NavLink className='host--nav-item' to='/host/vans'>Vans</NavLink>
+                <NavLink className='host--nav-item' to='/host/reviews'>Reviews</NavLink>
             </nav>
-            <Outlet />
-        </>
+            <main>
+                <Outlet />
+            </main>
+        </div>
     )
 }
