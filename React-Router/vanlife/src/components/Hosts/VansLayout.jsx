@@ -1,17 +1,9 @@
 import React from "react";
 import { useParams, Outlet, NavLink, Link } from "react-router-dom";
 
-export default function VansLayout() {
+export default function VansLayout({useHostVanDetail}) {
 
-    const [hostVanDetail, setHostVanDetail] = React.useState([])
-    const hostVanId = useParams();
-    React.useEffect(() => {
-        fetch(`/api/host/vans/${hostVanId.id}`)
-            .then(response => response.json())
-            .then(data => {
-                setHostVanDetail(data.vans[0])
-            })
-    }, [])
+    const hostVanDetail = useHostVanDetail(useParams().id);
 
     return (
         <div className="hostVanDetails--container">

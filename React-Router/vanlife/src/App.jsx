@@ -39,30 +39,45 @@ function App() {
   // Fetch Host Van Data from the API
   React.useEffect(() => {
     fetch('api/host/vans')
-    .then(response => response.json())
-    .then(data => {
-      setHostVanData(data.vans)
-    })
+      .then(response => response.json())
+      .then(data => {
+        setHostVanData(data.vans)
+      })
   }, [])
-  
+
+  // Function for returning Van Data based on the ID
+  function useHostVanDetail(hostVanId) {
+    const [hostVanDetail, setHostVanDetail] = React.useState([]);
+
+    React.useEffect(() => {
+      fetch(`/api/host/vans/${hostVanId}`)
+        .then(response => response.json())
+        .then(data => {
+          setHostVanDetail(data.vans[0]);
+        });
+    }, [hostVanId]);
+
+    return hostVanDetail;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Layout/>}>
-          <Route index element={<Home />}/>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home />} />
           <Route path='about' element={<About />} />
-          <Route path='vans' element={<Vans vanData={vanData} />}/>
-          <Route path='vans/:id' element={<VanDetails />}/>
-          <Route path='host' element={<HostLayout/>}>
-            <Route index element={<Dashboard/>}/>
-            <Route path='income' element={<Income/>}/>
-            <Route path='vans' element={<HostVans hostVanData={hostVanData}/>}/>
-            <Route path='vans/:id' element={<VansLayout/>}>
-              <Route index element={<HostVanDetails/>}/>
-              <Route path='pricing' element={<Pricing/>}/>
-              <Route path='photos' element={<Photos/>}/>
+          <Route path='vans' element={<Vans vanData={vanData} />} />
+          <Route path='vans/:id' element={<VanDetails />} />
+          <Route path='host' element={<HostLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path='income' element={<Income />} />
+            <Route path='vans' element={<HostVans hostVanData={hostVanData} />} />
+            <Route path='vans/:id' element={<VansLayout useHostVanDetail={useHostVanDetail}/>}>
+              <Route index element={<HostVanDetails />} />
+              <Route path='pricing' element={<Pricing />} />
+              <Route path='photos' element={<Photos />} />
             </Route>
-            <Route path='reviews' element={<Reviews/>}/>
+            <Route path='reviews' element={<Reviews />} />
           </Route>
         </Route>
       </Routes>
