@@ -46,7 +46,7 @@ function App() {
   }, [])
 
   // Function for returning Van Data based on the ID
-  function useHostVanDetail(hostVanId) {
+  function getHostVanDetail(hostVanId) {
     const [hostVanDetail, setHostVanDetail] = React.useState([]);
 
     React.useEffect(() => {
@@ -72,7 +72,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path='income' element={<Income />} />
             <Route path='vans' element={<HostVans hostVanData={hostVanData} />} />
-            <Route path='vans/:id' element={<VansLayout useHostVanDetail={useHostVanDetail}/>}>
+            <Route path='vans/:id' element={<VansLayout getHostVanDetail={getHostVanDetail}/>}>
               <Route index element={<HostVanDetails />} />
               <Route path='pricing' element={<Pricing />} />
               <Route path='photos' element={<Photos />} />

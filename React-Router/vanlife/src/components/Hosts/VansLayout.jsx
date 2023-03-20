@@ -1,10 +1,9 @@
 import React from "react";
 import { useParams, Outlet, NavLink, Link } from "react-router-dom";
 
-export default function VansLayout({useHostVanDetail}) {
+export default function VansLayout({getHostVanDetail}) {
 
-    const hostVanDetail = useHostVanDetail(useParams().id);
-
+    const hostVanDetail = getHostVanDetail(useParams().id);
     return (
         <div className="hostVanDetails--container">
             <Link to='/host/vans' className="hostVanDetails--header">{'<- Back to all vans'}</Link>
