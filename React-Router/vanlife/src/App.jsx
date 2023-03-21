@@ -19,6 +19,7 @@ import Photos from './components/Hosts/Photos'
 /* ------------------------------------ x ----------------------------------- */
 import PageNotFound from './PageNotFound'
 import './server'
+import { getVans } from './API'
 
 
 function App() {
@@ -28,11 +29,12 @@ function App() {
 
   // Fetch the Van data from the API
   React.useEffect(() => {
-    fetch("/api/vans")
-      .then(response => response.json())
-      .then(data => {
-        setVanData(data.vans)
-      })
+    async function loadVans() {
+      const data = await getVans()
+      setVanData(data)
+    }
+
+    loadVans()
   }, [])
 
   // State for saving the Host Van Data from the API
