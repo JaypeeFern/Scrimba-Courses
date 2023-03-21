@@ -2,6 +2,8 @@ import React from 'react'
 import './server'
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route} from 'react-router-dom'
 /* ------------------------------------ x ----------------------------------- */
+import Login from './components/User/Login'
+/* ------------------------------------ x ----------------------------------- */
 import Layout from './components/Layout'
 import Home from './components/Vans/Home'
 import About from './components/Vans/About'
@@ -28,6 +30,7 @@ function App() {
       <Route path='about' element={<About />} />
       <Route path='vans' element={<Vans />}  errorElement={<Error/>} loader={vansLoader}/>
       <Route path='vans/:id' element={<VanDetails />} />
+      <Route path='login' element={<Login />} />
       <Route path='host' element={<HostLayout />}>
         <Route index element={<Dashboard />} />
         <Route path='income' element={<Income />} />

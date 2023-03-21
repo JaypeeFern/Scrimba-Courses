@@ -16,6 +16,7 @@ export default function Nav() {
                         <NavLink className={isActive} to='host'>Host</NavLink>
                         <NavLink className={isActive} to='about'>About</NavLink>
                         <NavLink className={isActive} to='vans'>Vans</NavLink>
+                        <NavLink className={isActive} to='login'>Login</NavLink>
                     </ul>
                 </nav>
             </div>
