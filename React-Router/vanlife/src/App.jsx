@@ -18,14 +18,15 @@ import VansLayout from './components/Hosts/VansLayout'
 import Pricing from './components/Hosts/Pricing'
 import Photos from './components/Hosts/Photos'
 /* ------------------------------------ x ----------------------------------- */
-import PageNotFound from './PageNotFound'
+import PageNotFound from './components/Utility/PageNotFound'
+import Error from './components/Utility/Error'
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/' element={<Layout />}>z
       <Route index element={<Home />} />
       <Route path='about' element={<About />} />
-      <Route path='vans' element={<Vans />} loader={vansLoader}/>
+      <Route path='vans' element={<Vans />}  errorElement={<Error/>} loader={vansLoader}/>
       <Route path='vans/:id' element={<VanDetails />} />
       <Route path='host' element={<HostLayout />}>
         <Route index element={<Dashboard />} />
