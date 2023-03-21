@@ -1,10 +1,11 @@
 import React from 'react'
-import { BrowserRouter, RouterProvider, createBrowserRouter, createRoutesFromElements, Routes, Route, useParams, Outlet } from 'react-router-dom'
+import './server'
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route} from 'react-router-dom'
 /* ------------------------------------ x ----------------------------------- */
 import Layout from './components/Layout'
 import Home from './components/Vans/Home'
 import About from './components/Vans/About'
-import Vans from './components/Vans/Vans'
+import Vans, { loader as vansLoader } from './components/Vans/Vans'
 import VanDetails from './components/Vans/VanDetails'
 /* ------------------------------------ x ----------------------------------- */
 import HostLayout from './components/Hosts/HostLayout'
@@ -18,36 +19,8 @@ import Pricing from './components/Hosts/Pricing'
 import Photos from './components/Hosts/Photos'
 /* ------------------------------------ x ----------------------------------- */
 import PageNotFound from './PageNotFound'
-import './server'
-import { getVans } from './API'
-
 
 function App() {
-
-  // State for saving the Van data from the API 
-  const [vanData, setVanData] = React.useState([])
-
-  // State for handling loading while fetching data from the API
-  const [loading, setLoading] = React.useState(false)
-
-  // State for catching errors
-  const [error, setError] = React.useState(null)
-
-  // Fetch the Van data from the API
-  React.useEffect(() => {
-    async function loadVans() {
-      setLoading(true)
-      try {
-        const data = await getVans()
-        setVanData(data)
-      } catch (error) {
-        setError(error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadVans()
-  }, [])
 
   // State for saving the Host Van Data from the API
   const [hostVanData, setHostVanData] = React.useState([])
@@ -65,7 +38,7 @@ function App() {
     <Route path='/' element={<Layout />}>z
       <Route index element={<Home />} />
       <Route path='about' element={<About />} />
-      <Route path='vans' element={<Vans loading={loading} error={error} vanData={vanData} />} />
+      <Route path='vans' element={<Vans />} loader={vansLoader}/>
       <Route path='vans/:id' element={<VanDetails />} />
       <Route path='host' element={<HostLayout />}>
         <Route index element={<Dashboard />} />

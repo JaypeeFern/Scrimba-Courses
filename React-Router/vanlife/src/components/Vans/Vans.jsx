@@ -1,16 +1,55 @@
 import React from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useLoaderData } from "react-router-dom";
+import { getVans } from "../../API";
 
-export default function Vans({ loading, error, vanData }) {
+export function loader() {
+    return getVans()
+}
+
+export default function Vans() {
+
+    /* -------------------------------------------------------------------------- */
+    /*                       CHALLENGE NOT DONE DO TOMORROW                       */
+    /* -------------------------------------------------------------------------- */
+    // https://scrimba.com/learn/reactrouter6/use-the-loader-data-instead-of-the-useeffect-co6d04545963529a052e371ed
+    /* ------------------------------------ X ----------------------------------- */
+
+    // data is the return value from the loader function
+    const data = useLoaderData()
+
+    // State for saving the Van data from the API 
+    const [vanData, setVanData] = React.useState([])
+
+    // State for handling loading while fetching data from the API
+    const [loading, setLoading] = React.useState(false)
+
+    // State for catching errors
+    const [error, setError] = React.useState(null)
+
+    // Fetch the Van data from the API
+    // React.useEffect(() => {
+    //     async function loadVans() {
+    //         setLoading(true)
+    //         try {
+    //             const data = await getVans()
+    //             setVanData(data)
+    //         } catch (error) {
+    //             setError(error)
+    //         } finally {
+    //             setLoading(false)
+    //         }
+    //     }
+    //     loadVans()
+    // }, [])
 
     const [searchParams, setSearchParams] = useSearchParams()
     const typeFilter = searchParams.get("type")
     const filterVan = typeFilter ? vanData.filter(item => item.type.toLowerCase() === typeFilter) : vanData
 
     const activeFilter = {
-        simple: typeFilter === 'simple' ? {backgroundColor: '#E17654', color: 'white'}: {backgroundColor: '#FFEAD0', color: "rgba(77, 77, 77, 1)", transition: 'all 0.2s ease-in-out'},
-        luxury: typeFilter === 'luxury' ? {backgroundColor: '#161616', color: 'white'}: {backgroundColor: '#FFEAD0', color: "rgba(77, 77, 77, 1)", transition: 'all 0.2s ease-in-out'},
-        rugged: typeFilter === 'rugged' ? {backgroundColor: '#115E59', color: 'white'}: {backgroundColor: '#FFEAD0', color: "rgba(77, 77, 77, 1)", transition: 'all 0.2s ease-in-out'}
+        simple: typeFilter === 'simple' ? { backgroundColor: '#E17654', color: 'white' } : { backgroundColor: '#FFEAD0', color: "rgba(77, 77, 77, 1)", transition: 'all 0.2s ease-in-out' },
+        luxury: typeFilter === 'luxury' ? { backgroundColor: '#161616', color: 'white' } : { backgroundColor: '#FFEAD0', color: "rgba(77, 77, 77, 1)", transition: 'all 0.2s ease-in-out' },
+        rugged: typeFilter === 'rugged' ? { backgroundColor: '#115E59', color: 'white' } : { backgroundColor: '#FFEAD0', color: "rgba(77, 77, 77, 1)", transition: 'all 0.2s ease-in-out' }
     }
 
     const types = {
@@ -21,11 +60,11 @@ export default function Vans({ loading, error, vanData }) {
         }
     }
 
-    if(loading) {
+    if (loading) {
         return <h1>Loading...</h1>
     }
 
-    if(error) {
+    if (error) {
         return <h1>{error.message}</h1>
     }
 
