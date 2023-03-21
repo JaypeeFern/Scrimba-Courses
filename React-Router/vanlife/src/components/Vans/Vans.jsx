@@ -21,6 +21,7 @@ export default function Vans({ vanData }) {
         }
     }
 
+    // REMINDER! STATE CAN HAVE MULTIPLE OBJECTS INSIDE OF IT
     const typeEntries = Object.entries(types.type)
     const VanItems = filterVan.map(item => (
         <Link to={`${item.id}`} state={{ search: searchParams.toString() }} key={item.id} className="van--item">
