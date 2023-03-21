@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useSearchParams, useLoaderData } from "react-router-dom";
-import { getVans } from "../../API";
+import { getVans } from "../../api";
 
 export function loader() {
     return getVans()
@@ -8,39 +8,8 @@ export function loader() {
 
 export default function Vans() {
 
-    /* -------------------------------------------------------------------------- */
-    /*                       CHALLENGE NOT DONE DO TOMORROW                       */
-    /* -------------------------------------------------------------------------- */
-    // https://scrimba.com/learn/reactrouter6/use-the-loader-data-instead-of-the-useeffect-co6d04545963529a052e371ed
-    /* ------------------------------------ X ----------------------------------- */
-
     // data is the return value from the loader function
-    const data = useLoaderData()
-
-    // State for saving the Van data from the API 
-    const [vanData, setVanData] = React.useState([])
-
-    // State for handling loading while fetching data from the API
-    const [loading, setLoading] = React.useState(false)
-
-    // State for catching errors
-    const [error, setError] = React.useState(null)
-
-    // Fetch the Van data from the API
-    // React.useEffect(() => {
-    //     async function loadVans() {
-    //         setLoading(true)
-    //         try {
-    //             const data = await getVans()
-    //             setVanData(data)
-    //         } catch (error) {
-    //             setError(error)
-    //         } finally {
-    //             setLoading(false)
-    //         }
-    //     }
-    //     loadVans()
-    // }, [])
+    const vanData = useLoaderData()
 
     const [searchParams, setSearchParams] = useSearchParams()
     const typeFilter = searchParams.get("type")
@@ -58,14 +27,6 @@ export default function Vans() {
             luxury: '#161616',
             rugged: '#115E59'
         }
-    }
-
-    if (loading) {
-        return <h1>Loading...</h1>
-    }
-
-    if (error) {
-        return <h1>{error.message}</h1>
     }
 
     // REMINDER! STATE CAN HAVE MULTIPLE OBJECTS INSIDE OF IT
@@ -139,3 +100,28 @@ export default function Vans() {
 // <Link to='?type=luxury'>Luxury</Link>
 // <Link to='?type=rugged'>Rugged</Link>
 // <Link to='.'>Clear filters</Link>
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                       OLD WAY TO FETCH DATA FROM API                       */
+/* -------------------------------------------------------------------------- */
+
+    // State for saving the Van data from the API 
+    // const [vanData, setVanData] = React.useState([])
+
+    // Fetch the Van data from the API
+    // React.useEffect(() => {
+    //     async function loadVans() {
+    //         setLoading(true)
+    //         try {
+    //             const data = await getVans()
+    //             setVanData(data)
+    //         } catch (error) {
+    //             setError(error)
+    //         } finally {
+    //             setLoading(false)
+    //         }
+    //     }
+    //     loadVans()
+    // }, [])
