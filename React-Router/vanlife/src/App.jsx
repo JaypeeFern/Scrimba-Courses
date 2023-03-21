@@ -17,6 +17,7 @@ import VansLayout from './components/Hosts/VansLayout'
 import Pricing from './components/Hosts/Pricing'
 import Photos from './components/Hosts/Photos'
 /* ------------------------------------ x ----------------------------------- */
+import PageNotFound from './PageNotFound'
 import './server'
 
 
@@ -65,6 +66,7 @@ function App() {
             </Route>
             <Route path='reviews' element={<Reviews />} />
           </Route>
+          <Route path='*' element={<PageNotFound/>} />
         </Route>
       </Routes>
     </BrowserRouter>

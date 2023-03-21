@@ -25,6 +25,51 @@ html {
 /* ------------------------------- END GLOBAL ------------------------------- */
 
 /* -------------------------------------------------------------------------- */
+/*                             404 PAGE NOT FOUND                             */
+/* -------------------------------------------------------------------------- */
+
+.notfound--container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 155px);
+}
+
+.notfound--wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 24px;
+}
+
+.notfound--header {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 42px;
+    color: rgba(22, 22, 22, 1);
+    text-align: center;
+}
+
+.notfound--link {
+    width: 400px;
+    height: 55px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 32px;
+    background-color: #161616;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 5px;
+}
+
+/* --------------------------------- END 404 -------------------------------- */
+
+/* -------------------------------------------------------------------------- */
 /*                                   MAIN NAVBAR                                   */
 /* -------------------------------------------------------------------------- */
 
