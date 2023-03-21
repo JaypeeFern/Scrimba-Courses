@@ -23,7 +23,7 @@ export default function Vans({ vanData }) {
 
     const typeEntries = Object.entries(types.type)
     const VanItems = filterVan.map(item => (
-        <Link to={`/vans/${item.id}`} key={item.id} className="van--item">
+        <Link to={`${item.id}`} key={item.id} className="van--item">
             <div className="van--img-container">
                 <img className="van--img" src={item.imageUrl} />
             </div>
