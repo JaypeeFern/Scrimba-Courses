@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
-export default function Vans({ vanData }) {
+export default function Vans({ loading, error, vanData }) {
 
     const [searchParams, setSearchParams] = useSearchParams()
     const typeFilter = searchParams.get("type")
@@ -19,6 +19,14 @@ export default function Vans({ vanData }) {
             luxury: '#161616',
             rugged: '#115E59'
         }
+    }
+
+    if(loading) {
+        return <h1>Loading...</h1>
+    }
+
+    if(error) {
+        return <h1>{error.message}</h1>
     }
 
     // REMINDER! STATE CAN HAVE MULTIPLE OBJECTS INSIDE OF IT

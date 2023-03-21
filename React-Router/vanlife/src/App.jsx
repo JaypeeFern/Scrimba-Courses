@@ -27,13 +27,25 @@ function App() {
   // State for saving the Van data from the API 
   const [vanData, setVanData] = React.useState([])
 
+  // State for handling loading while fetching data from the API
+  const [loading, setLoading] = React.useState(false)
+
+  // State for catching errors
+  const [error, setError] = React.useState(null)
+
   // Fetch the Van data from the API
   React.useEffect(() => {
     async function loadVans() {
-      const data = await getVans()
-      setVanData(data)
+      setLoading(true)
+      try {
+        const data = await getVans()
+        setVanData(data)
+      } catch (error) {
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
     }
-
     loadVans()
   }, [])
 
@@ -52,10 +64,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Layout />}>
+        <Route path='/' element={<Layout />}>z
           <Route index element={<Home />} />
           <Route path='about' element={<About />} />
-          <Route path='vans' element={<Vans vanData={vanData} />} />
+          <Route path='vans' element={<Vans loading={loading} error={error} vanData={vanData} />} />
           <Route path='vans/:id' element={<VanDetails />} />
           <Route path='host' element={<HostLayout />}>
             <Route index element={<Dashboard />} />
@@ -68,7 +80,7 @@ function App() {
             </Route>
             <Route path='reviews' element={<Reviews />} />
           </Route>
-          <Route path='*' element={<PageNotFound/>} />
+          <Route path='*' element={<PageNotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
