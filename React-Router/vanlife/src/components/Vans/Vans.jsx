@@ -1,7 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function Vans({ vanData }) {
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    const typeFilter = searchParams.get("type")
+    const filterVan = typeFilter ? vanData.filter(item => item.type.toLowerCase() === typeFilter) : vanData
+
+    const activeFilter = {
+        simple: typeFilter === 'simple' ? {backgroundColor: '#E17654', color: 'white'}: {backgroundColor: '#FFEAD0', color: "rgba(77, 77, 77, 1)", transition: 'all 0.2s ease-in-out'},
+        luxury: typeFilter === 'luxury' ? {backgroundColor: '#161616', color: 'white'}: {backgroundColor: '#FFEAD0', color: "rgba(77, 77, 77, 1)", transition: 'all 0.2s ease-in-out'},
+        rugged: typeFilter === 'rugged' ? {backgroundColor: '#115E59', color: 'white'}: {backgroundColor: '#FFEAD0', color: "rgba(77, 77, 77, 1)", transition: 'all 0.2s ease-in-out'}
+    }
 
     const types = {
         type: {
@@ -12,8 +22,7 @@ export default function Vans({ vanData }) {
     }
 
     const typeEntries = Object.entries(types.type)
-
-    const VanItems = vanData.map(item => (
+    const VanItems = filterVan.map(item => (
         <Link to={`/vans/${item.id}`} key={item.id} className="van--item">
             <div className="van--img-container">
                 <img className="van--img" src={item.imageUrl} />
@@ -35,16 +44,39 @@ export default function Vans({ vanData }) {
         </Link>
     ))
 
+    // Function for <Link/> that will not overwrite search params but instead concatenate them
+    // function genNewSearchParamString(key, value) {
+    //     const sp = new URLSearchParams(searchParams)
+    //     if (value === null) {
+    //       sp.delete(key)
+    //     } else {
+    //       sp.set(key, value)
+    //     }
+    //     return `?${sp.toString()}`
+    //   }
+
+    // Function for <Button/> that will not overwrite search params but instead concatenate them
+    function handleFilterChange(key, value) {
+        setSearchParams(prevParams => {
+            if (value === null) {
+                prevParams.delete(key)
+            } else {
+                prevParams.set(key, value)
+            }
+            return prevParams
+        })
+    }
+
     return (
         <div className="van--container">
             <div className="van--wrapper">
                 <div className="van--options">
                     <span className="van--options-title">Explore our van options</span>
                     <div className="van--options-choices">
-                        <button>Simple</button>
-                        <button>Luxury</button>
-                        <button>Rugged</button>
-                        <button>Clear filters</button>
+                        <button style={activeFilter.simple} onClick={() => handleFilterChange('type', 'simple')} className='simple'>Simple</button>
+                        <button style={activeFilter.luxury} onClick={() => handleFilterChange('type', 'luxury')} className='luxury'>Luxury</button>
+                        <button style={activeFilter.rugged} onClick={() => handleFilterChange('type', 'rugged')} className='rugged'>Rugged</button>
+                        {typeFilter ? <button onClick={() => handleFilterChange('type', null)}>Clear filters</button> : <button></button>}
                     </div>
                 </div>
                 <div className="van--list--container">
@@ -54,3 +86,8 @@ export default function Vans({ vanData }) {
         </div>
     )
 }
+
+// <Link to='?type=simple'>Simple</Link>
+// <Link to='?type=luxury'>Luxury</Link>
+// <Link to='?type=rugged'>Rugged</Link>
+// <Link to='.'>Clear filters</Link>

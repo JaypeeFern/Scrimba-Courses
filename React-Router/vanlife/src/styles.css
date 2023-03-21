@@ -304,12 +304,41 @@ html {
     width: 104px;
     height: 37px;
     border: none;
-    background-color: #FFEAD0;
+    /* background-color: #FFEAD0; */
     border-radius: 5px;
     font-weight: 500;
     font-size: 16px;
     line-height: 23px;
     cursor: pointer;
+    /* text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+.simple, .luxury, .rugged {
+    background-color: #FFEAD0;
+    color: #4d4d4d;
+    transition: all 0.2s ease-in-out;
+}
+
+.simple:hover {
+    background-color: #E17654;
+    color: white;
+    transition: all 0.2s ease-in-out;
+}
+
+.luxury:hover {
+    background-color: #161616;
+    color: #FFEAD0;
+    transition: all 0.2s ease-in-out;
+}
+
+.rugged:hover {
+    background-color: #115E59;
+    color: white;
+    transition: all 0.2s ease-in-out;
 }
 
 .van--options-choices button:last-child {
@@ -322,6 +351,9 @@ html {
     color: #4D4D4D;
     margin-left: 20px;
     cursor: pointer;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
 }
 
 .van--list--container {
