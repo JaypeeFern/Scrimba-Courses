@@ -1,6 +1,6 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import { loginUser } from "../../api";
+import { useLocation, useNavigate } from "react-router-dom";
+import { loginUser } from "../../API";
 
 
 export default function Login() {
@@ -9,6 +9,7 @@ export default function Login() {
     const [status, setStatus] = React.useState('idle')
     const [error, setError] = React.useState(null)
     const location = useLocation()
+    const navigate = useNavigate()
 
     async function handleForm(event) {
         event.preventDefault()
@@ -16,7 +17,8 @@ export default function Login() {
         setError(null)
         const response = await loginUser(formData)
             .then(data => {
-                console.log(data);
+                localStorage.setItem("loggedin", true)
+                navigate(location.state?.from || '/host', { replace: true })
             })
             .catch(err => {
                 setError(err)
@@ -35,6 +37,9 @@ export default function Login() {
             [name]: value
         }))
     }
+
+    // localStorage.removeItem("loggedin")
+
     return (
         <div className="login--container">
             <div className="login--wrapper">
@@ -50,3 +55,8 @@ export default function Login() {
         </div>
     )
 }
+
+
+// if(data.user.id == location.state?.token) {
+//    navigate('/host', { replace: true, state: { token: data.user.id } })
+// }

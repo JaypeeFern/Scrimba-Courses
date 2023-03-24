@@ -1,21 +1,18 @@
 import React from "react";
-import { useParams, Outlet, NavLink, Link } from "react-router-dom";
+import { useParams, Outlet, NavLink, Link, useLoaderData } from "react-router-dom";
+import { getHostVans } from "../../API";
+
+export function loader({ params }) {
+    console.log(params.id);
+    return getHostVans(params.id)
+}
 
 export default function VansLayout() {
-
-    const [hostVanDetail, setHostVanDetail] = React.useState([])
-    const { id } = useParams();
-
-    React.useEffect(() => {
-        fetch(`/api/host/vans/${id}`)
-          .then(response => response.json())
-          .then(data => {
-            setHostVanDetail(data.vans[0]);
-          });
-      }, []);
-
+ 
+    const hostVanDetail = useLoaderData();
+    
     function OutletContext() {
-        return <Outlet context={[hostVanDetail, setHostVanDetail]} />;
+        return <Outlet context={hostVanDetail} />;
       }
 
     return (
@@ -23,12 +20,12 @@ export default function VansLayout() {
             <Link to='../vans' className="hostVanDetails--header">{'<- Back to all vans'}</Link>
             <div className="hostVanDetails--card">
                 <div className="hostVanDetails--card-image-container">
-                    <img className="hostVanDetails--card-image" src={hostVanDetail.imageUrl} alt={hostVanDetail.name} />
+                    <img className="hostVanDetails--card-image" src={hostVanDetail.imageUrl} />
                 </div>
                 <div className="hostVanDetails--card-details">
                     <span className="hostVanDetails--van-type">{hostVanDetail.type}</span>
                     <span className="hostVanDetails--van-name">{hostVanDetail.name}</span>
-                    <span className="hostVanDetails--van-price"><b className="bold">${hostVanDetail.price}</b>/day</span>
+                    <span className="hostVanDetails--van-price"><b className="bold">{hostVanDetail.price}</b>/day</span>
                 </div>
             </div>
             <div className="hostVanDetails--nav-container">

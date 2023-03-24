@@ -2,7 +2,7 @@ import React from 'react'
 import {useOutletContext } from 'react-router-dom'
 
 export default function Pricing() {
-    const [hostVanDetail, setHostVanDetail] = useOutletContext();
+    const hostVanDetail = useOutletContext();
     return (
         <div className='pricing--container'>
             <div className='pricing--wrapper'>

@@ -2,7 +2,7 @@ import React from 'react'
 import {useOutletContext } from 'react-router-dom'
 
 export default function Photos() {
-    const [hostVanDetail, setHostVanDetail] = useOutletContext();
+    const hostVanDetail = useOutletContext();
     return (
         <div className='photos--container'>
             <div className='photos--wrapper'>
