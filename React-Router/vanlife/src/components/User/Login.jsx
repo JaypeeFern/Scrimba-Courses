@@ -1,13 +1,27 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { loginUser } from "../../api";
+
 
 export default function Login() {
 
     const [formData, setFormData] = React.useState({email: '', password: ''})
     const location = useLocation()
-    function handleForm(event) {
+
+    async function handleForm(event) {
         event.preventDefault()
-        console.log(formData)
+        
+        async function handleAuth() {
+            const data = await loginUser(formData)
+            return data
+        }
+    
+        try {
+            const data = await handleAuth();
+            console.log(data);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     function handleChange(event) {
