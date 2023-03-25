@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, useLocation, useLoaderData } from "react-router-dom";
-import { getVans } from "../../API";
+import { getVanDetails } from "../../API";
 
 export function loader({ params }) {
-    return getVans(params.id)
+    return getVanDetails(params.id)
 
 }
 

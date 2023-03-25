@@ -1,4 +1,17 @@
-export async function getVans(id) {
+export async function getVans() {
+    const response = await fetch(`/api/vans`)
+    if (!response.ok) {
+        throw {
+            message: 'Failed to fetch data',
+            statusText: response.statusText,
+            status: response.status
+        }
+    }
+    const data = await response.json()
+    return data.vans
+}
+
+export async function getVanDetails(id) {
     const response = await fetch(`/api/vans/${id}`)
     if (!response.ok) {
         throw {
@@ -11,7 +24,20 @@ export async function getVans(id) {
     return data.vans
 }
 
-export async function getHostVans(id) {
+export async function getHostVans() {
+    const response = await fetch(`/api/host/vans`)
+    if (!response.ok) {
+        throw {
+            message: 'Failed to fetch data',
+            statusText: response.statusText,
+            status: response.status
+        }
+    }
+    const data = await response.json()
+    return data.vans
+}
+
+export async function getHostVansDetails(id) {
     const response = await fetch(`/api/host/vans/${id}`)
     if (!response.ok) {
         throw {

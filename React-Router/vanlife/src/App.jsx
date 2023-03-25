@@ -29,7 +29,7 @@ function App() {
     <Route path='/' element={<Layout />}>z
       <Route index element={<Home />} />
       <Route path='about' element={<About />} />
-      <Route path='vans' element={<Vans />} errorElement={<Error />} loader={vansLoader} />
+      <Route path='vans' element={<Vans />} loader={vansLoader} />
       <Route path='vans/:id' element={<VanDetails />} loader={vansDetailLoader} />
       <Route path='login' element={<Login />} />
       <Route element={<AuthRequired />}>
