@@ -1,12 +1,12 @@
 import React from "react";
-import { useLocation, useNavigate, useActionData, Form } from "react-router-dom";
+import { useLocation, useNavigate, useActionData, useNavigation, Form, useSearchParams } from "react-router-dom";
 import { loginUser } from "../../API";
 
 export async function action({ request }) {
     const formData = await request.formData();
     const email = formData.get('email')
     const password = formData.get('password')
-
+    
     try {
         const login = await loginUser({ email, password })
         localStorage.setItem('loggedin', true)
@@ -22,15 +22,13 @@ export default function Login() {
     const data = useActionData()
     const location = useLocation()
     const navigate = useNavigate()
-
-    const isLoggedIn = localStorage.getItem('loggedin')
-    const logOut = () => {
-        return localStorage.removeItem('loggedin')
-    }
+    const navigation = useNavigation()
+    const [searchParams] = useSearchParams()
+    const redirectTo = searchParams.get('redirectTo')
 
     React.useEffect(() => {
         if (data?.token) {
-            navigate(location.state?.from || '/host', { replace: true })
+            navigate(redirectTo ? redirectTo : '/host', { replace: true })
         }
     }, [data])
 
@@ -43,8 +41,7 @@ export default function Login() {
                 <Form method="POST" className="login--form">
                     <input name="email" placeholder="Email" type='email' />
                     <input name="password" placeholder="Password" type='password' />
-                    <button className={`login--btn`}></button>
-                    {isLoggedIn && <button onClick={logOut}>Log Out</button>}
+                    <button disabled={navigation.state == 'submitting' ? true:false} className={`${navigation.state != 'submitting' ? 'login--btn':'login--btn-disabled'}`}></button>                 
                 </Form>
             </div>
         </div>

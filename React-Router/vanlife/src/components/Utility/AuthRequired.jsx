@@ -6,7 +6,7 @@ export default function AuthRequired() {
     const isLoggedIn = localStorage.getItem('loggedin')
 
     if(!isLoggedIn) {
-        return <Navigate to="/login" state={{message: 'Login first', from: location.pathname}} replace />;
+        return <Navigate to={`/login?redirectTo=${location.pathname}`} state={{message: 'Login first', from: location.pathname}} replace />;
     }
 
     return <Outlet/>
