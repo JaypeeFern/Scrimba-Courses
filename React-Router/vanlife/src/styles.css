@@ -609,9 +609,9 @@ html {
     padding: 13px;
 }
 
-.login--form input::placeholder {
-    /* padding-left: 13px; */
-}
+/* .login--form input::placeholder {
+    padding-left: 13px;
+} */
 
 .login--form input:focus {
     outline: none;
