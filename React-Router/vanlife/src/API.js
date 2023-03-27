@@ -1,5 +1,9 @@
-export async function getVans(id) {
-    const response = await fetch(`/api/vans/${id}`)
+export async function getVans(id = null) {
+    let url = '/api/vans'
+    if (id) {
+        url += `/${id}`
+    }
+    const response = await fetch(url)
     if (!response.ok) {
         throw {
             message: 'Failed to fetch data',
@@ -11,8 +15,12 @@ export async function getVans(id) {
     return data.vans
 }
 
-export async function getHostVans(id) {
-    const response = await fetch(`/api/host/vans/${id}`)
+export async function getHostVans(id = null) {
+    let url = '/api/host/vans'
+    if (id) {
+        url += `/${id}`
+    }
+    const response = await fetch(url)
     if (!response.ok) {
         throw {
             message: 'Failed to fetch data',
