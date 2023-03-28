@@ -1,9 +1,11 @@
 import React, { Suspense } from 'react';
 import { Outlet, NavLink, Link, useLoaderData, defer, Await } from 'react-router-dom';
-import { getHostVans } from '../../API';
+import { getVans } from '../Firebase/api';
+// import { getHostVans } from '../../API';
+
 
 export function loader({ params }) {
-  return defer({ vans: getHostVans(params.id) });
+  return defer({ vans: getVans(params.id) });
 }
 
 export default function VansLayout() {

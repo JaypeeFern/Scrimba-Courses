@@ -1,9 +1,10 @@
 import React, { Suspense } from 'react';
 import { Link, useLoaderData, defer, Await } from 'react-router-dom';
-import { getHostVans } from '../../API';
+import { getHostVans } from '../Firebase/api';
+// import { getHostVans } from '../../API';
 
 export function loader() {
-  return defer({ vans: getHostVans() });
+  return defer({ vans: getHostVans('123') });
 }
 
 export default function HostVans() {
@@ -11,6 +12,7 @@ export default function HostVans() {
   const hostVanPromise = useLoaderData();
 
   function renderHostVanElements(vans) {
+
     const HostVanItems = vans.map((item) => (
       <Link key={item.id} to={item.id} className="hostVans--item">
         <div className="hostVans--item-image-container">
