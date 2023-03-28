@@ -23,6 +23,7 @@ import Photos from './components/Hosts/Photos'
 import PageNotFound from './components/Utility/PageNotFound'
 import Error from './components/Utility/Error'
 import AuthRequired from './components/Utility/AuthRequired'
+/* -------------------------------- Firebase -------------------------------- */
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(

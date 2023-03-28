@@ -12,7 +12,6 @@ export default function Vans() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const typeFilter = searchParams.get('type');
-  //   const filterVan = typeFilter ? vanData.filter(item => item.type.toLowerCase() === typeFilter) : vanData
 
   const activeFilter = {
     simple: typeFilter === 'simple' ? { backgroundColor: '#E17654', color: 'white' } : { backgroundColor: '#FFEAD0', color: 'rgba(77, 77, 77, 1)', transition: 'all 0.2s ease-in-out' },
@@ -27,17 +26,6 @@ export default function Vans() {
       rugged: '#115E59',
     },
   };
-
-  // Function for <Link/> that will not overwrite search params but instead concatenate them
-  // function genNewSearchParamString(key, value) {
-  //     const sp = new URLSearchParams(searchParams)
-  //     if (value === null) {
-  //       sp.delete(key)
-  //     } else {
-  //       sp.set(key, value)
-  //     }
-  //     return `?${sp.toString()}`
-  //   }
 
   // Function for <Button/> that will not overwrite search params but instead concatenate them
   function handleFilterChange(key, value) {
@@ -107,10 +95,6 @@ export default function Vans() {
   );
 }
 
-// <Link to='?type=simple'>Simple</Link>
-// <Link to='?type=luxury'>Luxury</Link>
-// <Link to='?type=rugged'>Rugged</Link>
-// <Link to='.'>Clear filters</Link>
 
 /* -------------------------------------------------------------------------- */
 /*                       OLD WAY TO FETCH DATA FROM API                       */
@@ -134,3 +118,23 @@ export default function Vans() {
 //     }
 //     loadVans()
 // }, [])
+
+/* -------------------------------------------------------------------------- */
+/*                                    Other                                   */
+/* -------------------------------------------------------------------------- */
+
+// <Link to='?type=simple'>Simple</Link>
+// <Link to='?type=luxury'>Luxury</Link>
+// <Link to='?type=rugged'>Rugged</Link>
+// <Link to='.'>Clear filters</Link>
+
+// Function for <Link/> that will not overwrite search params but instead concatenate them
+// function genNewSearchParamString(key, value) {
+//     const sp = new URLSearchParams(searchParams)
+//     if (value === null) {
+//       sp.delete(key)
+//     } else {
+//       sp.set(key, value)
+//     }
+//     return `?${sp.toString()}`
+//   }
