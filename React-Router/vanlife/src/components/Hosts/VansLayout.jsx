@@ -3,7 +3,6 @@ import { useParams, Outlet, NavLink, Link, useLoaderData } from "react-router-do
 import { getHostVans } from "../../API";
 
 export function loader({ params }) {
-    console.log(params.id);
     return getHostVans(params.id)
 }
 
