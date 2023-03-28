@@ -5,6 +5,7 @@ let vans;
 let hostVans;
 let users;
 const vansRef = collection(db, 'vans');
+const userRef = collection(db, 'users');
 
 export async function getVans(id) {
   const vansSnapshot = await getDocs(vansRef);
