@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Link, useSearchParams, useLoaderData, defer, Await } from 'react-router-dom';
-import { getVans } from '../../API';
+import { getVans } from '../Firebase/api'
+// import { getVans } from '../../API';
 
 export function loader() {
   return defer({ vans: getVans() });

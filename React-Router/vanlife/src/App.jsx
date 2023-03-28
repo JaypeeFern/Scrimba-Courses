@@ -1,5 +1,5 @@
 import React from 'react'
-import './server'
+// import './server'
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
 /* ------------------------------------ x ----------------------------------- */
 import Login, { action as loginAction } from './components/User/Login'
